@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RonalDigital — Guia de Vendas Interno</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ===== SCREEN STYLES ===== */
+    :root {
+      --cyan:    #00d4ff;
+      --bg:      #090a0f;
+      --surface: #0f1118;
+      --s2:      #141520;
+      --s3:      #1a1e2a;
+      --border:  rgba(0,212,255,.12);
+      --bsolid:  #1e2235;
+      --text:    #e8edf5;
+      --mid:     #b0bcd4;
+      --muted:   #5a6a88;
+      --success: #10b981;
+      --danger:  #f87171;
+      --warning: #fbbf24;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      background: rgba(9,10,15,.95);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-logo {
+      width: 40px; height: 40px;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 0 12px rgba(0,212,255,.15);
+    }
+    .brand-logo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
+    }
+    .brand-name { font-size: 15px; font-weight: 800; }
+    .brand-name span { color: var(--cyan); }
+    .brand-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .topbar-right { display: flex; gap: 10px; align-items: center; }
+    .badge-internal {
+      background: rgba(248,113,113,.1);
+      border: 1px solid rgba(248,113,113,.2);
+      color: #f87171;
+      font-size: 10px; font-weight: 800;
+      padding: 4px 10px; border-radius: 20px;
+      text-transform: uppercase; letter-spacing: .6px;
+    }
+    .btn-pdf {
+      background: var(--cyan); color: #090a0f;
+      border: none; border-radius: 8px;
+      padding: 9px 20px; font-size: 13px; font-weight: 800;
+      cursor: pointer; display: flex; align-items: center; gap: 8px;
+      transition: all .2s;
+    }
+    .btn-pdf:hover { background: #38e4ff; transform: translateY(-1px); }
+
+    /* MAIN */
+    .main { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    /* HERO */
+    .hero {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 40px;
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 240px; height: 240px;
+      background: radial-gradient(circle, rgba(0,212,255,.08) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .9px;
+      color: var(--cyan); margin-bottom: 10px;
+    }
+    .hero-title {
+      font-size: 28px; font-weight: 900;
+      letter-spacing: -.6px; line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .hero-title span { color: var(--cyan); }
+    .hero-desc { font-size: 14px; color: var(--mid); max-width: 520px; line-height: 1.7; }
+    .hero-pills {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .pill {
+      background: var(--s3); border: 1px solid var(--bsolid);
+      border-radius: 20px; padding: 5px 14px;
+      font-size: 12px; font-weight: 600; color: var(--mid);
+    }
+
+    /* PLAN OVERVIEW */
+    .plans-overview {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 14px; margin-bottom: 32px;
+    }
+    .plan-ov {
+      background: var(--surface); border: 1px solid var(--bsolid);
+      border-radius: 12px; padding: 20px;
+    }
+    .plan-ov.rec {
+      border-color: var(--cyan);
+      background: rgba(0,212,255,.04);
+      box-shadow: 0 0 24px rgba(0,212,255,.08);
+    }
+    .plan-ov-name { font-size: 13px; font-weight: 800; color: var(--mid); margin-bottom: 4px; }
+    .plan-ov-price { font-size: 22px; font-weight: 900; color: var(--cyan); line-height: 1; }
+    .plan-ov-price small { font-size: 12px; font-weight: 500; color: var(--muted); }
+    .plan-ov-setup { font-size: 11.5px; color: var(--muted); margin-top: 6px; margin-bottom: 14px; }
+    .plan-ov-for {
+      font-size: 12px; font-weight: 600; color: var(--mid);
+      background: var(--s2); border-radius: 6px;
+      padding: 8px 10px; line-height: 1.5;
+    }
+    .plan-ov-pitch {
+      font-size: 11.5px; color: var(--muted);
+      margin-top: 10px; font-style: italic; line-height: 1.5;
+    }
+
+    /* SECTION */
+    .section { margin-bottom: 40px; }
+    .section-title {
+      font-size: 11px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .9px;
+      color: var(--cyan); margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-title::before {
+      content: '';
+      width: 3px; height: 14px;
+      background: var(--cyan);
+      border-radius: 2px;
+    }
+
+    /* FEATURE BLOCK */
+    .feature-block {
+      background: var(--surface);
+      border: 1px solid var(--bsolid);
+      border-radius: 12px;
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .feature-header {
+      padding: 18px 22px 14px;
+      display: flex; align-items: flex-start; gap: 14px;
+      border-bottom: 1px solid var(--bsolid);
+    }
+    .feature-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: rgba(0,212,255,.1);
+      border: 1px solid rgba(0,212,255,.2);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px;
+    }
+    .feature-name { font-size: 15px; font-weight: 800; color: var(--text); line-height: 1.2; }
+    .feature-plans {
+      display: flex; gap: 6px; margin-top: 5px; flex-wrap: wrap;
+    }
+    .plan-tag {
+      font-size: 10px; font-weight: 700;
+      padding: 2px 8px; border-radius: 20px;
+      text-transform: uppercase; letter-spacing: .3px;
+    }
+    .tag-starter { background: rgba(0,212,255,.1); color: var(--cyan); border: 1px solid rgba(0,212,255,.2); }
+    .tag-growth  { background: rgba(16,185,129,.1); color: #34d399; border: 1px solid rgba(16,185,129,.2); }
+    .tag-pro     { background: rgba(167,139,250,.1); color: #a78bfa; border: 1px solid rgba(167,139,250,.2); }
+    .feature-body { padding: 18px 22px; }
+    .feature-what {
+      font-size: 13.5px; color: var(--mid); margin-bottom: 14px; line-height: 1.7;
+    }
+
+    /* Info rows */
+    .info-row {
+      display: flex; gap: 8px;
+      padding: 10px 12px; border-radius: 8px;
+      margin-bottom: 8px; font-size: 13px;
+      align-items: flex-start;
+    }
+    .info-row.pitch   { background: rgba(0,212,255,.06); border: 1px solid rgba(0,212,255,.15); color: var(--cyan); }
+    .info-row.tip     { background: rgba(245,158,11,.06); border: 1px solid rgba(245,158,11,.15); color: var(--warning); }
+    .info-row.warning { background: rgba(248,113,113,.06); border: 1px solid rgba(248,113,113,.15); color: var(--danger); }
+    .info-row.note    { background: var(--s2); border: 1px solid var(--bsolid); color: var(--mid); }
+    .info-row-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+    .info-row-text { flex: 1; line-height: 1.6; }
+    .info-row-text strong { font-weight: 700; }
+
+    /* Comparison table */
+    .comp-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 13px; margin-top: 4px;
+    }
+    .comp-table th {
+      background: var(--s3); color: var(--cyan);
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .5px;
+      padding: 10px 14px; text-align: left;
+      border-bottom: 1px solid var(--bsolid);
+    }
+    .comp-table td {
+      padding: 9px 14px; color: var(--mid);
+      border-bottom: 1px solid var(--bsolid);
+      vertical-align: middle;
+    }
+    .comp-table tr:last-child td { border-bottom: none; }
+    .comp-table tr:nth-child(even) td { background: var(--s2); }
+    .comp-table .yes { color: #34d399; font-weight: 700; }
+    .comp-table .no  { color: var(--muted); }
+
+    /* Diff badge */
+    .diff-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; margin-top: 10px;
+    }
+    .diff-item {
+      padding: 12px 14px; border-radius: 8px; font-size: 12.5px;
+    }
+    .diff-item.bad  { background: rgba(248,113,113,.06); border: 1px solid rgba(248,113,113,.15); }
+    .diff-item.good { background: rgba(16,185,129,.06); border: 1px solid rgba(16,185,129,.15); }
+    .diff-label {
+      font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .5px;
+      margin-bottom: 5px;
+    }
+    .diff-item.bad  .diff-label { color: var(--danger); }
+    .diff-item.good .diff-label { color: #34d399; }
+    .diff-item p { color: var(--mid); line-height: 1.5; }
+
+    /* Objection box */
+    .objection-block {
+      background: var(--surface); border: 1px solid var(--bsolid);
+      border-radius: 12px; overflow: hidden; margin-bottom: 14px;
+    }
+    .obj-q {
+      padding: 14px 18px;
+      background: var(--s2); border-bottom: 1px solid var(--bsolid);
+      font-size: 13.5px; font-weight: 700; color: var(--text);
+      display: flex; gap: 10px; align-items: center;
+    }
+    .obj-q::before { content: '?'; color: var(--warning); font-size: 16px; font-weight: 900; flex-shrink: 0; }
+    .obj-a {
+      padding: 14px 18px;
+      font-size: 13px; color: var(--mid); line-height: 1.7;
+    }
+    .obj-a strong { color: var(--text); }
+
+    /* Footer */
+    footer {
+      text-align: center; padding: 32px 24px;
+      font-size: 11.5px; color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ===== TAB NAV ===== */
+    .tab-nav {
+      background: rgba(9,10,15,.96);
+      border-bottom: 1px solid rgba(0,212,255,.12);
+      display: flex;
+      padding: 0 32px;
+      gap: 4px;
+    }
+    .tab-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #5a6a88;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .25s;
+      white-space: nowrap;
+    }
+    .tab-link:hover { color: #b0bcd4; }
+    .tab-link.active { color: #00d4ff; border-bottom-color: #00d4ff; }
+    .tab-link i { font-size: 13px; }
+    @media (max-width: 640px) {
+      .tab-nav { padding: 0 12px; }
+      .tab-link { padding: 11px 12px; font-size: 12px; }
+      .tab-link i { display: none; }
+    }
+
+    /* ===== PRINT STYLES ===== */
+    @media print {
+      @page { margin: 16mm 18mm; size: A4; }
+      body { background: #fff !important; color: #111 !important; font-size: 11pt; }
+      .topbar, .tab-nav, .btn-pdf, footer { display: none !important; }
+      .main { max-width: 100%; padding: 0; }
+      :root {
+        --cyan: #0077aa; --bg: #fff; --surface: #f8f9fa;
+        --s2: #f0f2f5; --s3: #e8edf2;
+        --border: #dde3ec; --bsolid: #d0d8e4;
+        --text: #0f172a; --mid: #334155; --muted: #64748b;
+        --success: #059669; --danger: #dc2626; --warning: #b45309;
+      }
+      .hero, .feature-block, .plan-ov, .objection-block { border: 1px solid #dde3ec !important; box-shadow: none !important; }
+      .feature-block, .plan-ov, .objection-block, .section { page-break-inside: avoid; }
+      .hero::before { display: none; }
+      .info-row.pitch   { background: #e0f2fe !important; border-color: #bae6fd !important; color: #0369a1 !important; }
+      .info-row.tip     { background: #fefce8 !important; border-color: #fde68a !important; color: #92400e !important; }
+      .info-row.warning { background: #fef2f2 !important; border-color: #fecaca !important; color: #991b1b !important; }
+      .info-row.note    { background: #f8fafc !important; }
+      .diff-item.bad    { background: #fef2f2 !important; border-color: #fecaca !important; }
+      .diff-item.good   { background: #f0fdf4 !important; border-color: #bbf7d0 !important; }
+      .diff-item.bad  p, .diff-item.good p { color: #334155 !important; }
+      .diff-item.bad  .diff-label { color: #dc2626 !important; }
+      .diff-item.good .diff-label { color: #059669 !important; }
+      .plan-ov.rec      { border-color: #0077aa !important; background: #f0f8ff !important; }
+      .plan-ov-price, .section-title, .feature-name, .hero-title span { color: #0077aa !important; }
+      .plan-tag.tag-starter { background: #e0f2fe !important; color: #0369a1 !important; border-color: #bae6fd !important; }
+      .plan-tag.tag-growth  { background: #f0fdf4 !important; color: #059669 !important; border-color: #bbf7d0 !important; }
+      .plan-tag.tag-pro     { background: #faf5ff !important; color: #7c3aed !important; border-color: #e9d5ff !important; }
+      .obj-q::before { color: #b45309 !important; }
+      .comp-table th { background: #f0f4f8 !important; color: #0077aa !important; }
+      .comp-table tr:nth-child(even) td { background: #f8fafc !important; }
+      .badge-internal { background: #fef2f2 !important; color: #dc2626 !important; border-color: #fecaca !important; }
+      .plans-overview { grid-template-columns: repeat(3,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR (screen only) -->
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-logo"><img src="img/logomarca.png" alt="RonalDigital" /></div>
+    <div>
+      <div class="brand-name">Ronal<span>Digital</span></div>
+      <div class="brand-sub">Guia de Vendas Interno</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <span class="badge-internal">🔒 Restrito aos sócios</span>
+    <button class="btn-pdf" onclick="window.print()">
+      ⬇ Exportar PDF
+    </button>
+  </div>
+</div>
+
+<nav class="tab-nav">
+  <a class="tab-link" href="index.html">
+    <i class="fas fa-stethoscope"></i> Diagnóstico de Cliente
+  </a>
+  <a class="tab-link active" href="guia-vendas.html">
+    <i class="fas fa-book-open"></i> Guia de Vendas
+  </a>
+</nav>
+
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Guia Interno de Vendas — Automação de Leads para Concessionárias</div>
+    <h1 class="hero-title">O que você entrega<br><span>e como explicar ao cliente</span></h1>
+    <p class="hero-desc">
+      Este documento explica cada funcionalidade dos planos RonalDigital em linguagem simples —
+      o que é, por que o lojista precisa e como argumentar quando ele perguntar ou objetar.
+    </p>
+    <div class="hero-pills">
+      <span class="pill">📋 Uso interno</span>
+      <span class="pill">🚗 Concessionárias</span>
+      <span class="pill">💬 Argumentos de venda</span>
+      <span class="pill">⚠️ Limitações honestas</span>
+    </div>
+  </div>
+
+  <!-- PLAN OVERVIEW -->
+  <div class="section">
+    <div class="section-title">Visão geral dos planos</div>
+    <div class="plans-overview">
+      <div class="plan-ov">
+        <div class="plan-ov-name">STARTER</div>
+        <div class="plan-ov-price">R$797<small>/mês</small></div>
+        <div class="plan-ov-setup">Ativação R$1.500 · Contrato 3 meses</div>
+        <div class="plan-ov-for">Para loja sem nada digital ainda — ou que usa só o WhatsApp pessoal.</div>
+        <div class="plan-ov-pitch">"Do zero ao digital organizado em 2 semanas."</div>
+      </div>
+      <div class="plan-ov rec">
+        <div class="plan-ov-name">GROWTH ⭐ mais vendido</div>
+        <div class="plan-ov-price">R$1.297<small>/mês</small></div>
+        <div class="plan-ov-setup">Ativação R$2.500 · Contrato 3 meses</div>
+        <div class="plan-ov-for">Para loja que já tenta gerar leads mas perde no atendimento e no follow-up.</div>
+        <div class="plan-ov-pitch">"Você já gera leads — a gente para de jogar fora."</div>
+      </div>
+      <div class="plan-ov">
+        <div class="plan-ov-name">PRO</div>
+        <div class="plan-ov-price">R$1.997<small>/mês</small></div>
+        <div class="plan-ov-setup">Ativação R$3.500 · Contrato 6 meses</div>
+        <div class="plan-ov-for">Para loja que quer escalar volume e terceirizar o digital completamente.</div>
+        <div class="plan-ov-pitch">"Terceiriza o digital, foca em vender."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FEATURES ===== -->
+  <div class="section">
+    <div class="section-title">Explicação de cada funcionalidade</div>
+
+    <!-- 1. Landing page -->
+    <div class="feature-block">
+      <div class="feature-header">
+        <div class="feature-icon">🎯</div>
+        <div>
+          <div class="feature-name">Landing Page de Captação</div>
+          <div class="feature-plans">
+            <span class="plan-tag tag-starter">Starter</span>
+            <span class="plan-tag tag-growth">Growth</span>
+            <span class="plan-tag tag-pro">Pro</span>
+          </div>
+        </div>
+      </div>
+      <div class="feature-body">
+        <div class="feature-what">
+          Uma página web criada por você, focada 100% em capturar o contato do interessado.
+          Diferente do site institucional, ela tem um único objetivo: o visitante preencher
+          nome, telefone e qual veículo procura. Quando isso acontece, o lead entra
+          automaticamente no CRM.
+        </div>
+        <div class="info-row pitch">
+          <span class="info-row-icon">💬</span>
+          <div class="info-row-text"><strong>Argumento de venda:</strong> "Hoje quando você faz um anúncio, onde a pessoa cai? No seu perfil do Instagram. Com a landing page, ela cai numa página que captura o contato dela e joga no sistema antes de você falar com ela."</div>
+        </div>
+        <div class="info-row tip">
+          <span class="info-row-icon">💡</span>
+          <div class="info-row-text"><strong>Por que é diferente do site da loja:</strong> O site tem muita informação e distrai. A landing page tem só uma oferta e um botão. A taxa de conversão é 3 a 5x maior.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. WhatsApp Business comum -->
+    <div class="feature-block">
+      <div class="feature-header">
+        <div class="feature-icon">📱</div>
+        <div>
+          <div class="feature-name">WhatsApp Business Configurado</div>
+          <div class="feature-plans">
+            <span class="plan-tag tag-starter">Starter</span>
+          </div>
+        </div>
+      </div>
+      <div class="feature-body">
+        <div class="feature-what">
+          Configuração do WhatsApp Business gratuito: catálogo de veículos, mensagem
+          automática de ausência, etiquetas de atendimento (Novo Lead, Em Negociação,
+          Fechado), horário de funcionamento e perfil completo da empresa.
+        </div>
+        <div class="info-row warning">
+          <span class="info-row-icon">⚠️</span>
+          <div class="info-row-text"><strong>Limitação importante de conhecer:</strong> Esta é a versão gratuita, sem API. Disparos automáticos de follow-up (D+1, D+3) não são nativos — dependem de ação manual ou ferramentas de terceiros. Isso é a principal razão para migrar para Growth.</div>
+        </div>
+        <div class="info-row note">
+          <span class="info-row-icon">📌</span>
+          <div class="info-row-text">O Starter serve bem para loja que ainda não tem nenhuma organização digital. A meta é organizar o básico e vender o upgrade em 60 dias.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. WhatsApp Business API -->
+    <div class="feature-block">
+      <div class="feature-header">
+        <div class="feature-icon">⚡</div>
+        <div>
+          <div class="feature-name">WhatsApp Business API</div>
+          <div class="feature-plans">
+            <span class="plan-tag tag-growth">Growth</span>
+            <span class="plan-tag tag-pro">Pro</span>
+          </div>
+        </div>
+      </div>
+      <div class="feature-body">
+        <div class="feature-what">
+          A versão oficial da Meta para empresas que precisam de automação real.
+          Conecta o número da loja a uma plataforma (ex: Twilio, 360dialog) que permite
+          enviar mensagens automáticas sem nenhuma intervenção humana.
+        </div>
+        <div class="diff-row">
+          <div class="diff-item bad">
+            <div class="diff-label">❌ Sem API (Starter)</div>
+            <p>Follow-up manual, 1 celular por vez, sem chatbot, sem múltiplos atendentes simultâneos.</p>
+          </div>
+          <div class="diff-item good">
+            <div class="diff-label">✅ Com API (Growth / Pro)</div>
+            <p>Follow-up automático, vários atendentes no mesmo número, chatbot, disparo programado.</p>
+          </div>
+        </div>
+        <div class="info-row pitch" style="margin-top:12px">
+          <span class="info-row-icon">💬</span>
+          <div class="info-row-text"><strong>Argumento de venda:</strong> "Com a API, quando um lead entra às 23h num domingo, ele recebe uma mensagem automática em menos de 1 minuto dizendo que você vai falar com ele de manhã. Nenhum concorrente faz isso."</div>
+        </div>
+        <div class="info-row warning">
+          <span class="info-row-icon">⚠️</span>
+          <div class="info-row-text"><strong>Custo que você precisa saber:</strong> A Meta cobra por conversa iniciada pela empresa (~R$0,25–0,40 cada). Esse custo está embutido na sua margem — não é repassado ao cliente como variável, mas precisa ser controlado.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. CRM básico -->
+    <div class="feature-block">
+      <div class="feature-header">
+        <div class="feature-icon">📋</div>
+        <div>
+          <div class="feature-name">CRM Básico de Leads</div>
+          <div class="feature-plans">
+            <span class="plan-tag tag-starter">Starter</span>
+          </div>
+        </div>
+      </div>
+      <div class="feature-body">
+        <div class="feature-what">
+          Sistema simples para registrar e acompanhar os leads: nome, telefone, veículo
+          de interesse e status (Novo / Em contato / Proposta feita / Fechado / Perdido).
+          Substitui a planilha do Excel e os post-its. Cada lead que entra pela landing
+          page aparece automaticamente na lista.
+        </div>
+        <div class="info-row pitch">
+          <span class="info-row-icon">💬</span>
+          <div class="info-row-text"><strong>Argumento de venda:</strong> "Hoje se um vendedor sai da loja, o que acontece com os clientes que ele estava atendendo? Com o CRM, ficam registrados e qualquer um da equipe continua de onde parou."</div>
+        </div>
+        <div class="info-row note">
+          <span class="info-row-icon">📌</span>
+          <div class="info-row-text">Sem pipeline visual avançado, sem automações de sequência, sem relatórios detalhados. Para isso, o cliente precisa do Growth.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. CRM completo -->
+    <div class="feature-block">
+      <div class="feature-header">
+        <div class="feature-icon">🗂️</div>
+        <div>
+          <div class="feature-name">CRM Completo + Pipeline</div>
+          <div class="feature-plans">
+            <span class="plan-tag tag-growth">Growth</span>
+            <span class="plan-tag tag-pro">Pro</span>
+          </div>
+        </div>
+      </div>
+      <div class="feature-body">
+        <div class="feature-what">
+          CRM com funil visual estilo Kanban onde você arrasta o lead de coluna em
+          coluna: <strong>Novo → Contato feito → Visita agendada → Proposta → Fechado.</strong>
+          Cada movimento fica registrado com data e responsável.
+        </div>
+        <table class="comp-table">
+          <thead>
+            <tr><th>Funcionalidade</th><th>CRM Básico</th><th>CRM Completo</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Lista de leads</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><td>Pipeline visual (Kanban)</td><td class="no">—</td><td class="yes">✓</td></tr>
+            <tr><td>Histórico de conversas</td><td class="no">—</td><td class="yes">✓</td></tr>
+            <tr><td>Integração WhatsApp API</td><td class="no">—</td><td class="yes">✓</td></tr>
+            <tr><td>Alertas de follow-up</td><td class="no">—</td><td class="yes">✓</td></tr>
+            <tr><td>Relatórios de conversão</td><td class="no">—</td><td class="yes">✓</td></tr>
+          </tbody>
+        </table>
+        <div class="info-row pitch" style="margin-top:12px">
+          <span class="info-row-icon">💬</span>
+          <div class="info-row-text"><strong>Argumento de venda:</strong> "Hoje vocês sabem quantos leads entraram no mês passado? Quantos viraram visita? Com o CRM completo, o gerente vê isso em tempo real sem perguntar pra ninguém."</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Follow-up D+1, D+3 -->
+    <div class="feature-block">
+      <div class="feature-header">
+        <div class="feature-icon">🔁</div>
+        <div>
+          <div class="feature-name">Automação de Follow-up D+1, D+3</div>
+          <div class="feature-plans">
+            <span class="plan-tag tag-starter">Starter</span>
+          </div>
+        </div>
+      </div>
+      <div class="feature-body">
+        <div class="feature-what">
+          Sequência automática de mensagens para leads que entraram mas não responderam
+          ou não avançaram no funil:
+        </div>
+        <div class="info-row note" style="flex-direction:column;gap:6px;padding:14px">
+          <div style="font-size:12px;font-weight:700;color:var(--cyan);margin-bottom:4px">EXEMPLO DE SEQUÊNCIA</div>
+          <div style="font-size:12.5px;color:var(--mid);line-height:1.8">
+            <strong>D+0</strong> — Lead entra: vendedor responde (ou deveria)<br>
+            <strong>D+1</strong> — Automático: <em>"Oi João! Vi que você se interessou pelo Onix. Ainda está buscando? Tenho algumas opções que podem te interessar 😊"</em><br>
+            <strong>D+3</strong> — Automático: <em>"João, tenho uma condição especial essa semana no financiamento. Posso te passar os detalhes?"</em>
+          </div>
+        </div>
+        <div class="info-row warning">
+          <span class="info-row-icon">⚠️</span>
+          <div class="info-row-text"><strong>Importante saber:</strong> No Starter (sem API), estas mensagens podem precisar de disparo semi-manual. Com a API do Growth, são 100% automáticas.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. Follow-up D+1, D+3, D+7 -->
+    <div class="feature-block">
+      <div class="feature-header">
+        <div class="feature-icon">🔂</div>
+        <div>
+          <div class="feature-name">Automação de Follow-up D+1, D+3, D+7</div>
+          <div class="feature-plans">
+            <span class="plan-tag tag-growth">Growth</span>
+          </div>
+        </div>
+      </div>
+      <div class="feature-body">
+        <div class="feature-what">
+          Igual ao Starter, porém com uma terceira mensagem no D+7 para leads frios,
+          100% automática via WhatsApp API.
+        </div>
+        <div class="info-row tip">
+          <span class="info-row-icon">💡</span>
+          <div class="info-row-text"><strong>Por que o D+7 importa:</strong> Pesquisas do setor automotivo mostram que ~23% dos leads que não fecham na primeira semana fecham entre o D+5 e D+15 — eles estavam pesquisando em outros lugares. O D+7 captura exatamente essa janela. Sem automação, ninguém lembra de mandar essa mensagem.</div>
+        </div>
+        <div class="info-row pitch">
+          <span class="info-row-icon">💬</span>
+          <div class="info-row-text"><strong>Argumento de venda:</strong> "Quantas vezes um vendedor lembra de mandar mensagem no 7º dia depois de um lead não responder? Zero. A automação faz isso por ele enquanto ele foca nos leads quentes."</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. Automação avançada multi-canal -->
+    <div class="feature-block">
+      <div class="feature-header">
+        <div class="feature-icon">🌐</div>
+        <div>
+          <div class="feature-name">Automação Avançada Multi-canal</div>
+          <div class="feature-plans">
+            <span class="plan-tag tag-pro">Pro</span>
+          </div>
+        </div>
+      </div>
+      <div class="feature-body">
+        <div class="feature-what">
+          Follow-up não só pelo WhatsApp, mas coordenado em múltiplos canais
+          de forma simultânea. Também inclui lead scoring.
+        </div>
+        <table class="comp-table">
+          <thead>
+            <tr><th>Canal / Funcionalidade</th><th>Growth</th><th>Pro</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Follow-up WhatsApp automático</td><td class="yes">✓ D+1,3,7</td><td class="yes">✓ D+1,3,7,14</td></tr>
+            <tr><td>Follow-up por e-mail</td><td class="no">—</td><td class="yes">✓</td></tr>
+            <tr><td>Remarketing Meta Ads para leads frios</td><td class="no">—</td><td class="yes">✓</td></tr>
+            <tr><td>Lead scoring (priorização automática)</td><td class="no">—</td><td class="yes">✓</td></tr>
+            <tr><td>Chatbot de qualificação</td><td class="no">—</td><td class="yes">✓</td></tr>
+          </tbody>
+        </table>
+        <div class="info-row tip" style="margin-top:12px">
+          <span class="info-row-icon">💡</span>
+          <div class="info-row-text"><strong>Lead scoring:</strong> O sistema pontua os leads por comportamento — abriu a mensagem, visitou a landing page novamente, clicou no link do veículo. Os leads mais pontuados sobem para o topo da fila do vendedor automaticamente.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. Relatórios -->
+    <div class="feature-block">
+      <div class="feature-header">
+        <div class="feature-icon">📊</div>
+        <div>
+          <div class="feature-name">Relatório de Leads (Mensal / Semanal / Diário)</div>
+          <div class="feature-plans">
+            <span class="plan-tag tag-starter">Starter — Mensal</span>
+            <span class="plan-tag tag-growth">Growth — Semanal</span>
+            <span class="plan-tag tag-pro">Pro — Diário</span>
+          </div>
+        </div>
+      </div>
+      <div class="feature-body">
+        <div class="feature-what">
+          Dashboard ou relatório enviado ao gestor com as métricas do período:
+          leads gerados, taxa de resposta, tempo médio de primeiro contato,
+          taxa de conversão (leads → visitas → vendas) e origem dos leads.
+        </div>
+        <div class="info-row note">
+          <span class="info-row-icon">📌</span>
+          <div class="info-row-text">
+            <strong>Mensal:</strong> Você descobre o problema depois de 30 dias — tarde demais para corrigir naquele mês.<br>
+            <strong>Semanal:</strong> Você corrige no meio do mês — ainda dá tempo de agir.<br>
+            <strong>Diário:</strong> Você age no mesmo dia — máxima performance e controle.
+          </div>
+        </div>
+        <div class="info-row pitch">
+          <span class="info-row-icon">💬</span>
+          <div class="info-row-text"><strong>Argumento de venda:</strong> "Se um vendedor parou de responder os leads na terça-feira, você quer descobrir isso na sexta ou no dia 30 do mês?"</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. Integração multi-canal -->
+    <div class="feature-block">
+      <div class="feature-header">
+        <div class="feature-icon">🔗</div>
+        <div>
+          <div class="feature-name">Integração Multi-canal</div>
+          <div class="feature-plans">
+            <span class="plan-tag tag-growth">Growth</span>
+            <span class="plan-tag tag-pro">Pro</span>
+          </div>
+        </div>
+      </div>
+      <div class="feature-body">
+        <div class="feature-what">
+          Todos os canais de entrada de lead conectados a um único lugar. Independente
+          de onde o cliente veio, ele entra no mesmo funil e recebe o mesmo follow-up automático.
+        </div>
+        <div class="info-row note" style="flex-direction:column">
+          <div style="font-size:12px;font-weight:700;color:var(--cyan);margin-bottom:8px">FLUXO SEM INTEGRAÇÃO</div>
+          <div style="font-size:12.5px;color:var(--muted)">Instagram DM → vendedor vê quando abrir o app → sem registro → lead some</div>
+          <div style="font-size:12px;font-weight:700;color:#34d399;margin:10px 0 8px">FLUXO COM INTEGRAÇÃO</div>
+          <div style="font-size:12.5px;color:var(--mid)">Instagram DM + Facebook Lead + Google Forms + Landing page → <strong style="color:var(--cyan)">CRM (tudo num lugar)</strong> → follow-up automático começa imediatamente</div>
+        </div>
+        <div class="info-row pitch" style="margin-top:10px">
+          <span class="info-row-icon">💬</span>
+          <div class="info-row-text"><strong>Argumento de venda:</strong> "Hoje seus vendedores precisam checar Instagram, Facebook e WhatsApp separado. Lead some entre as abas. Com a integração, tudo aparece num lugar só e nenhum lead passa despercebido."</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11. Gestor de tráfego -->
+    <div class="feature-block">
+      <div class="feature-header">
+        <div class="feature-icon">🎯</div>
+        <div>
+          <div class="feature-name">Gestor de Tráfego Dedicado</div>
+          <div class="feature-plans">
+            <span class="plan-tag tag-pro">Pro exclusivo</span>
+          </div>
+        </div>
+      </div>
+      <div class="feature-body">
+        <div class="feature-what">
+          Um profissional da RonalDigital responsável por criar, monitorar e otimizar
+          os anúncios pagos da loja — Meta Ads (Instagram/Facebook) e Google Ads.
+          O cliente não precisa entender de anúncios: você faz tudo.
+        </div>
+        <div class="info-row note">
+          <span class="info-row-icon">📌</span>
+          <div class="info-row-text">
+            <strong>O que o gestor faz:</strong><br>
+            · Cria as campanhas e os criativos (artes, textos, vídeos)<br>
+            · Ajusta os anúncios semanalmente com base nos resultados<br>
+            · Testa variações de público e de oferta (A/B)<br>
+            · Garante que o custo por lead não suba sem controle<br>
+            · Instala e monitora pixels de rastreamento
+          </div>
+        </div>
+        <div class="info-row warning">
+          <span class="info-row-icon">⚠️</span>
+          <div class="info-row-text"><strong>Importante:</strong> O budget de anúncios (verba para o Facebook/Google) é pago à parte pelo cliente — não está incluso na mensalidade. O gestor gerencia esse orçamento, mas não o paga. Deixe isso claro no contrato.</div>
+        </div>
+        <div class="info-row pitch">
+          <span class="info-row-icon">💬</span>
+          <div class="info-row-text"><strong>Argumento de venda:</strong> "No Pro você não precisa se preocupar com anúncio. A gente cuida do tráfego, do CRM e da automação. Você só atende os leads que chegam."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBJECTIONS -->
+  <div class="section">
+    <div class="section-title">Objeções comuns e como responder</div>
+
+    <div class="objection-block">
+      <div class="obj-q">Está caro. Outro me faz por menos.</div>
+      <div class="obj-a">
+        "Pode ser. Mas me diz: esse outro entrega CRM integrado com WhatsApp API, follow-up automático, landing page e relatório semanal? Ou está vendendo só o perfil do Instagram bem feito?
+        A diferença não é o preço — é o que você para de perder. Se você perde 3 clientes por mês por demora no atendimento, e cada cliente vale R$60 mil... são R$180 mil indo embora por mês.
+        <strong>Nosso plano custa R$1.297. O prejuízo custa R$180.000.</strong>"
+      </div>
+    </div>
+
+    <div class="objection-block">
+      <div class="obj-q">Preciso pensar / vou falar com meu sócio.</div>
+      <div class="obj-a">
+        "Claro, faz sentido. Me deixa te perguntar uma coisa antes: o que exatamente você precisa pensar? Se for sobre o investimento, posso te mostrar a conta de quanto vocês estão perdendo hoje sem o sistema. Se for sobre se funciona, posso te mostrar um cliente no mesmo segmento que já usa.
+        <strong>O que seria mais útil pra você decidir?</strong>"
+      </div>
+    </div>
+
+    <div class="objection-block">
+      <div class="obj-q">A gente já tem WhatsApp Business. Não precisa disso.</div>
+      <div class="obj-a">
+        "Ótimo, isso facilita a configuração. Mas o WhatsApp Business gratuito é manual — alguém precisa estar olhando o celular para responder. O que a gente entrega é a <strong>API oficial</strong>, que permite: resposta automática imediata 24h, follow-up programado para quem não respondeu, e vários vendedores atendendo no mesmo número ao mesmo tempo.
+        É a diferença entre ter um carro e ter um carro com piloto automático."
+      </div>
+    </div>
+
+    <div class="objection-block">
+      <div class="obj-q">Já tentei automação antes e não funcionou.</div>
+      <div class="obj-a">
+        "Entendo. O que costuma dar errado é configurar a ferramenta sem ajustar o processo comercial — a automação responde, mas os vendedores não sabem o que fazer quando o lead chega qualificado. A gente não entrega só a tecnologia: entrega o treinamento da equipe, o script de abordagem e o acompanhamento semanal nos primeiros 30 dias. <strong>A ferramenta funciona quando o processo funciona junto.</strong>"
+      </div>
+    </div>
+
+    <div class="objection-block">
+      <div class="obj-q">Quero testar um mês antes de assinar contrato.</div>
+      <div class="obj-a">
+        "Eu entendo a lógica, mas não é possível operacionalmente: o setup leva de 1 a 2 semanas, a integração da API tem aprovação da Meta que demora dias, e os resultados de follow-up aparecem a partir do D+7 em diante.
+        Em 30 dias você mal terminou de configurar. O contrato mínimo de 3 meses existe justamente para garantir que você veja resultado real — não só a implementação.
+        <strong>A proposta cobre 3 meses com tudo incluso. É o tempo necessário para o sistema gerar resultado mensurável.</strong>"
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  RonalDigital &copy; 2026 &nbsp;·&nbsp; Guia Interno de Vendas &nbsp;·&nbsp;
+  <strong style="color:#f87171">Documento confidencial — uso restrito aos sócios</strong>
+</footer>
+
+</body>
+</html>

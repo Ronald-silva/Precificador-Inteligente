@@ -1,0 +1,2570 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RonalDigital — Diagnóstico Inteligente</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    /* ==================== VARIABLES — RonalDigital Dark Theme ==================== */
+    :root {
+      --cyan:          #00d4ff;
+      --cyan-dim:      #00aacc;
+      --cyan-glow:     rgba(0,212,255,.18);
+      --cyan-glow-sm:  rgba(0,212,255,.10);
+      --primary-mid:   #00d4ff;
+      --primary-light: #38e4ff;
+      --accent:        #00d4ff;
+      --accent-light:  rgba(0,212,255,.12);
+      --success:       #10b981;
+      --success-dim:   rgba(16,185,129,.15);
+      --warning:       #f59e0b;
+      --warning-dim:   rgba(245,158,11,.15);
+      --danger:        #f87171;
+      --danger-dim:    rgba(248,113,113,.15);
+      --bg:            #090a0f;
+      --bg-grid:       url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0z' fill='none'/%3E%3Cpath d='M40 0H0M0 40V0' stroke='%2300d4ff' stroke-opacity='.04' stroke-width='1'/%3E%3C/svg%3E");
+      --surface:       #0f1118;
+      --surface-2:     #141720;
+      --surface-3:     #1a1e2a;
+      --border:        rgba(0,212,255,.1);
+      --border-mid:    rgba(0,212,255,.16);
+      --border-solid:  #1e2235;
+      --text:          #e8edf5;
+      --text-mid:      #b0bcd4;
+      --text-muted:    #5a6a88;
+      --shadow-sm:     0 1px 4px rgba(0,0,0,.4);
+      --shadow:        0 4px 24px rgba(0,0,0,.5), 0 0 0 1px rgba(0,212,255,.06);
+      --shadow-lg:     0 10px 48px rgba(0,0,0,.6), 0 0 0 1px rgba(0,212,255,.08);
+      --shadow-cyan:   0 4px 24px rgba(0,212,255,.2);
+      --radius:        12px;
+      --radius-sm:     8px;
+      --radius-lg:     16px;
+      --transition:    all .25s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ==================== RESET ==================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg) var(--bg-grid);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: inherit; }
+
+    /* ==================== HEADER ==================== */
+    .app-header {
+      background: rgba(9,10,15,.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: var(--text);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 0 rgba(0,212,255,.08), 0 4px 32px rgba(0,0,0,.5);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .header-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 0 16px var(--cyan-glow-sm);
+    }
+    .header-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
+    }
+    .header-text h1 {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -.3px;
+      line-height: 1.2;
+      color: #fff;
+    }
+    .header-text h1 .brand-cyan { color: var(--cyan); }
+    .header-text span {
+      font-size: 11.5px;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: .3px;
+    }
+    .header-badge {
+      background: rgba(0,212,255,.08);
+      border: 1px solid rgba(0,212,255,.2);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--cyan);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: .3px;
+    }
+    .header-badge i { font-size: 10px; }
+    .internal-notice {
+      background: rgba(248,113,113,.08);
+      border: 1px solid rgba(248,113,113,.2);
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 10px;
+      font-weight: 800;
+      color: #f87171;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+    }
+
+    /* ==================== LAYOUT ==================== */
+    .app-main {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* ==================== PROGRESS ==================== */
+    .progress-container {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .progress-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+    }
+    .progress-count {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--cyan);
+    }
+    .progress-bar-wrap {
+      height: 4px;
+      background: var(--surface-3);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan-dim), var(--cyan));
+      border-radius: 99px;
+      transition: width .5s cubic-bezier(.4,0,.2,1);
+      box-shadow: 0 0 8px var(--cyan-glow);
+    }
+    .steps-row {
+      display: flex;
+      gap: 6px;
+    }
+    .step-dot {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .step-dot-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--border-solid);
+      background: var(--surface-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+    .step-dot.active .step-dot-circle {
+      background: rgba(0,212,255,.12);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 0 4px rgba(0,212,255,.08), 0 0 12px rgba(0,212,255,.2);
+    }
+    .step-dot.done .step-dot-circle {
+      background: rgba(16,185,129,.15);
+      border-color: var(--success);
+      color: var(--success);
+    }
+    .step-dot-label {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.3;
+      max-width: 72px;
+    }
+    .step-dot.active .step-dot-label { color: var(--cyan); font-weight: 700; }
+    .step-dot.done .step-dot-label { color: var(--success); }
+
+    /* ==================== FORM CARD ==================== */
+    .form-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .form-step {
+      display: none;
+      animation: slideIn .35s cubic-bezier(.4,0,.2,1);
+    }
+    .form-step.active { display: block; }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .step-header {
+      padding: 28px 32px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+    }
+    .step-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      flex-shrink: 0;
+      background: rgba(0,212,255,.1);
+      color: var(--cyan);
+      border: 1px solid rgba(0,212,255,.2);
+      box-shadow: 0 0 16px rgba(0,212,255,.1);
+    }
+    .step-icon.blue   { background: rgba(0,212,255,.1); color: var(--cyan); border-color: rgba(0,212,255,.2); }
+    .step-icon.orange { background: rgba(0,212,255,.1); color: var(--cyan); border-color: rgba(0,212,255,.2); }
+    .step-icon.green  { background: rgba(0,212,255,.1); color: var(--cyan); border-color: rgba(0,212,255,.2); }
+    .step-icon.purple { background: rgba(0,212,255,.1); color: var(--cyan); border-color: rgba(0,212,255,.2); }
+    .step-icon.cyan   { background: rgba(0,212,255,.1); color: var(--cyan); border-color: rgba(0,212,255,.2); }
+    .step-header-text h2 {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -.4px;
+      line-height: 1.2;
+    }
+    .step-header-text p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .step-body {
+      padding: 24px 32px 32px;
+    }
+
+    /* ==================== FORM ELEMENTS ==================== */
+    .field-group {
+      margin-bottom: 20px;
+    }
+    .field-row {
+      display: grid;
+      gap: 16px;
+    }
+    .field-row.cols-2 { grid-template-columns: 1fr 1fr; }
+    .field-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .field-label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-mid);
+      margin-bottom: 7px;
+      letter-spacing: .1px;
+    }
+    .field-label .required { color: var(--danger); margin-left: 2px; }
+    .field-input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border-solid);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--surface-2);
+      transition: var(--transition);
+      outline: none;
+    }
+    .field-input:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 3px rgba(0,212,255,.1);
+      background: var(--surface-3);
+    }
+    .field-input.error { border-color: var(--danger); }
+    .field-input::placeholder { color: var(--text-muted); }
+    select.field-input { cursor: pointer; color-scheme: dark; }
+    textarea.field-input { resize: vertical; min-height: 80px; }
+    .field-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 5px;
+    }
+    .field-error {
+      font-size: 12px;
+      color: var(--danger);
+      margin-top: 5px;
+      display: none;
+    }
+    .field-error.show { display: block; }
+
+    /* Checkbox & Radio Groups */
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+    .checkbox-item, .radio-item {
+      position: relative;
+    }
+    .checkbox-item input[type="checkbox"],
+    .radio-item input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .checkbox-label, .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border-solid);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-mid);
+      user-select: none;
+      background: var(--surface-2);
+    }
+    .checkbox-label:hover, .radio-label:hover {
+      border-color: rgba(0,212,255,.3);
+      background: rgba(0,212,255,.05);
+      color: var(--text);
+    }
+    .checkbox-item input:checked + .checkbox-label,
+    .radio-item input:checked + .radio-label {
+      border-color: var(--cyan);
+      background: rgba(0,212,255,.08);
+      color: var(--cyan);
+      box-shadow: 0 0 0 1px rgba(0,212,255,.15);
+    }
+    .checkbox-icon, .radio-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      border: 2px solid var(--border-solid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      flex-shrink: 0;
+      font-size: 11px;
+      color: transparent;
+    }
+    .radio-icon { border-radius: 50%; }
+    .checkbox-item input:checked + .checkbox-label .checkbox-icon,
+    .radio-item input:checked + .radio-label .radio-icon {
+      background: var(--cyan);
+      border-color: var(--cyan);
+      color: #0a0b0f;
+    }
+    .radio-grid {
+      display: grid;
+      gap: 8px;
+    }
+    .radio-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+    .radio-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+    /* Conditional fields */
+    .conditional-field {
+      display: none;
+      margin-top: 16px;
+      padding: 16px;
+      background: var(--surface-3);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+    .conditional-field.show { display: block; }
+
+    /* Section label */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--cyan);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      opacity: .8;
+    }
+
+    /* ==================== NAVIGATION ==================== */
+    .form-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      border-top: 1px solid var(--border);
+      background: var(--surface-2);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      transition: var(--transition);
+      letter-spacing: .2px;
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1.5px solid var(--border-solid);
+    }
+    .btn-ghost:hover { background: var(--surface-3); color: var(--text-mid); border-color: var(--border-mid); }
+    .btn-primary {
+      background: var(--cyan);
+      color: #0a0b0f;
+      box-shadow: 0 4px 16px rgba(0,212,255,.25);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-cyan);
+      background: var(--primary-light);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-accent {
+      background: var(--cyan);
+      color: #0a0b0f;
+      box-shadow: 0 4px 16px rgba(0,212,255,.3);
+    }
+    .btn-accent:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(0,212,255,.4); background: var(--primary-light); }
+    .btn-success {
+      background: linear-gradient(135deg, var(--success), #059669);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(16,185,129,.3);
+    }
+    .btn-success:hover { transform: translateY(-1px); }
+    .btn-lg { padding: 13px 28px; font-size: 15px; }
+    .btn i { font-size: 13px; }
+
+    /* ==================== RESULTS ==================== */
+    #results-page {
+      display: none;
+    }
+    #results-page.show { display: block; }
+
+    .results-hero {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .results-hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(0,212,255,.08) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .results-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: 10%;
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(0,212,255,.04) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .results-hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .results-hero-title {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -.5px;
+      line-height: 1.3;
+      color: var(--text);
+    }
+    .results-hero-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .results-hero-badge {
+      background: rgba(0,212,255,.1);
+      border: 1px solid rgba(0,212,255,.25);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      color: var(--cyan);
+    }
+    .results-hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-stat {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      text-align: center;
+    }
+    .hero-stat-value {
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--cyan);
+    }
+    .hero-stat-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 5px;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+    .result-card.full { grid-column: 1 / -1; }
+    .result-card-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .result-card-title i {
+      width: 24px;
+      height: 24px;
+      background: rgba(0,212,255,.1);
+      color: var(--cyan);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      border: 1px solid rgba(0,212,255,.15);
+    }
+
+    /* Score Gauge */
+    .score-gauge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .score-gauge svg { width: 140px; height: 140px; }
+    .gauge-track { fill: none; stroke: var(--surface-3); stroke-width: 10; }
+    .gauge-fill  { fill: none; stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1s cubic-bezier(.4,0,.2,1), stroke .5s; }
+    .gauge-center-text {
+      font-size: 28px;
+      font-weight: 900;
+      fill: var(--cyan);
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+    .gauge-center-sub {
+      font-size: 10px;
+      fill: var(--text-muted);
+      text-anchor: middle;
+      font-family: 'Inter', sans-serif;
+    }
+    .score-levels {
+      flex: 1;
+    }
+    .score-level-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-mid);
+    }
+    .score-level-item .badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .badge-blue   { background: rgba(0,212,255,.12); color: var(--cyan); border: 1px solid rgba(0,212,255,.2); }
+    .badge-green  { background: rgba(16,185,129,.12); color: #34d399; border: 1px solid rgba(16,185,129,.2); }
+    .badge-orange { background: rgba(245,158,11,.12); color: #fbbf24; border: 1px solid rgba(245,158,11,.2); }
+    .badge-red    { background: rgba(248,113,113,.12); color: #f87171; border: 1px solid rgba(248,113,113,.2); }
+    .badge-yellow { background: rgba(234,179,8,.12); color: #facc15; border: 1px solid rgba(234,179,8,.2); }
+    .badge-purple { background: rgba(167,139,250,.12); color: #a78bfa; border: 1px solid rgba(167,139,250,.2); }
+    .badge-gray   { background: var(--surface-3); color: var(--text-muted); border: 1px solid var(--border-solid); }
+
+    /* Plans */
+    .plans-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .plan-card {
+      border: 1.5px solid var(--border-solid);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      transition: var(--transition);
+      background: var(--surface-2);
+    }
+    .plan-card.recommended {
+      border-color: var(--cyan);
+      background: rgba(0,212,255,.04);
+      box-shadow: 0 0 0 1px rgba(0,212,255,.1), 0 0 32px rgba(0,212,255,.08);
+    }
+    .plan-rec-badge {
+      position: absolute;
+      top: -11px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--cyan);
+      color: #0a0b0f;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      letter-spacing: .3px;
+    }
+    .plan-name {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .plan-price {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--cyan);
+      line-height: 1;
+    }
+    .plan-price span { font-size: 13px; font-weight: 500; color: var(--text-muted); }
+    .plan-features {
+      margin-top: 14px;
+      text-align: left;
+    }
+    .plan-feat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-mid);
+      padding: 4px 0;
+    }
+    .plan-feat i { color: var(--success); font-size: 11px; width: 14px; }
+    .plan-feat.off i { color: var(--border-solid); }
+    .plan-feat.off { color: var(--text-muted); text-decoration: line-through; }
+
+    /* Investment */
+    .invest-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .invest-item {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: center;
+    }
+    .invest-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .invest-value {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .invest-value.accent  { color: var(--cyan); }
+    .invest-value.success { color: #34d399; }
+    .invest-value.primary { color: var(--cyan); }
+
+    /* ROI Block */
+    .roi-block {
+      background: rgba(16,185,129,.06);
+      border: 1px solid rgba(16,185,129,.2);
+      border-radius: var(--radius);
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .roi-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(16,185,129,.15);
+      border: 1px solid rgba(16,185,129,.25);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #34d399;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .roi-text h4 { font-size: 15px; font-weight: 700; color: #34d399; }
+    .roi-text p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+    /* Risk / Alert */
+    .alert-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .alert-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .alert-item.danger  { background: var(--danger-dim); border: 1px solid rgba(248,113,113,.2); color: #fca5a5; }
+    .alert-item.warning { background: var(--warning-dim); border: 1px solid rgba(245,158,11,.2); color: #fcd34d; }
+    .alert-item.info    { background: rgba(0,212,255,.06); border: 1px solid rgba(0,212,255,.15); color: var(--cyan); }
+    .alert-item i { margin-top: 2px; flex-shrink: 0; }
+
+    /* Timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .timeline-item {
+      display: flex;
+      gap: 16px;
+      position: relative;
+    }
+    .timeline-line {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .timeline-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: #0a0b0f;
+      flex-shrink: 0;
+      background: var(--cyan);
+      box-shadow: 0 0 12px rgba(0,212,255,.3);
+    }
+    .timeline-connector {
+      width: 1px;
+      flex: 1;
+      background: var(--border);
+      margin: 4px 0;
+      min-height: 16px;
+    }
+    .timeline-content {
+      padding-bottom: 20px;
+      padding-top: 4px;
+    }
+    .timeline-phase {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      color: var(--cyan);
+      opacity: .7;
+    }
+    .timeline-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 2px;
+    }
+    .timeline-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    /* Checklist */
+    .checklist-group {
+      margin-bottom: 20px;
+    }
+    .checklist-category {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--cyan);
+      margin-bottom: 8px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      opacity: .8;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 4px;
+      transition: var(--transition);
+    }
+    .checklist-item:hover { background: var(--surface-2); }
+    .checklist-checkbox {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--border-solid);
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .checklist-text {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-mid);
+    }
+    .priority-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+      white-space: nowrap;
+    }
+    .priority-alta  { background: var(--danger-dim); color: #f87171; border: 1px solid rgba(248,113,113,.2); }
+    .priority-media { background: var(--warning-dim); color: #fbbf24; border: 1px solid rgba(245,158,11,.2); }
+    .priority-baixa { background: rgba(0,212,255,.08); color: var(--cyan); border: 1px solid rgba(0,212,255,.15); }
+
+    /* PDF Export */
+    .export-bar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: var(--shadow);
+    }
+    .export-bar-text h4 { font-size: 15px; font-weight: 700; color: var(--text); }
+    .export-bar-text p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+    .export-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* Restart button */
+    .restart-bar {
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    /* ==================== FOOTER ==================== */
+    .app-footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+
+    /* ==================== TOAST ==================== */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--surface-3);
+      color: var(--text);
+      border: 1px solid var(--border-mid);
+      padding: 14px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: var(--shadow-lg);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: toastIn .3s ease;
+      max-width: 320px;
+    }
+    @keyframes toastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .toast.success { background: rgba(16,185,129,.15); border-color: rgba(16,185,129,.3); color: #34d399; }
+    .toast.error   { background: var(--danger-dim); border-color: rgba(248,113,113,.3); color: #f87171; }
+
+    /* ==================== RESPONSIVE ==================== */
+    @media (max-width: 640px) {
+      .app-header { padding: 14px 16px; }
+      .header-badge { display: none; }
+      .app-main { padding: 16px 12px 48px; }
+      .step-header { padding: 20px 18px 0; }
+      .step-body { padding: 18px 18px 24px; }
+      .form-nav { padding: 16px 18px; }
+      .field-row.cols-2, .field-row.cols-3 { grid-template-columns: 1fr; }
+      .checkbox-grid { grid-template-columns: 1fr 1fr; }
+      .radio-grid.cols-2, .radio-grid.cols-4 { grid-template-columns: 1fr 1fr; }
+      .results-hero-stats { grid-template-columns: 1fr 1fr; }
+      .results-grid { grid-template-columns: 1fr; }
+      .plans-row { grid-template-columns: 1fr; }
+      .invest-row { grid-template-columns: 1fr; }
+      .score-gauge-wrap { flex-direction: column; }
+      .steps-row { gap: 2px; }
+      .step-dot-label { display: none; }
+      .export-bar { flex-direction: column; align-items: flex-start; }
+      .progress-container { padding: 16px; }
+    }
+
+    /* ==================== TAB NAV ==================== */
+    .tab-nav {
+      background: rgba(9,10,15,.96);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      padding: 0 32px;
+      gap: 4px;
+    }
+    .tab-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .tab-link:hover { color: var(--text-mid); }
+    .tab-link.active {
+      color: var(--cyan);
+      border-bottom-color: var(--cyan);
+    }
+    .tab-link i { font-size: 13px; }
+    @media (max-width: 640px) {
+      .tab-nav { padding: 0 12px; }
+      .tab-link { padding: 11px 12px; font-size: 12px; }
+      .tab-link i { display: none; }
+    }
+
+    /* ==================== PRINT (hidden on print) ==================== */
+    @media print {
+      .app-header, .tab-nav, .progress-container, .form-nav, .export-bar, .restart-bar, .app-footer { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="app-header">
+  <div class="header-brand">
+    <div class="header-logo">
+      <img src="img/logomarca.png" alt="RonalDigital" />
+    </div>
+    <div class="header-text">
+      <h1><span>Ronal</span><span class="brand-cyan">Digital</span></h1>
+      <span>Diagnóstico Inteligente &mdash; Uso Interno</span>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <span class="internal-notice"><i class="fas fa-lock" style="margin-right:4px;font-size:9px"></i>Restrito aos sócios</span>
+    <div class="header-badge">
+      <i class="fas fa-chart-network"></i>
+      Ferramenta Interna
+    </div>
+  </div>
+</header>
+
+<!-- ==================== TAB NAV ==================== -->
+<nav class="tab-nav">
+  <a class="tab-link active" href="index.html">
+    <i class="fas fa-stethoscope"></i> Diagnóstico de Cliente
+  </a>
+  <a class="tab-link" href="guia-vendas.html">
+    <i class="fas fa-book-open"></i> Guia de Vendas
+  </a>
+</nav>
+
+<!-- ==================== MAIN ==================== -->
+<main class="app-main">
+
+  <!-- Progress -->
+  <div class="progress-container" id="progress-container">
+    <div class="progress-header">
+      <span class="progress-title">Progresso do Diagnóstico</span>
+      <span class="progress-count" id="progress-count">Etapa 1 de 5</span>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progress-bar" style="width: 20%"></div>
+    </div>
+    <div class="steps-row" id="steps-row">
+      <div class="step-dot active" data-step="1" onclick="goToStep(1)">
+        <div class="step-dot-circle"><i class="fas fa-building" id="step-icon-1"></i></div>
+        <span class="step-dot-label">Empresa</span>
+      </div>
+      <div class="step-dot" data-step="2" onclick="goToStep(2)">
+        <div class="step-dot-circle"><i class="fas fa-globe" id="step-icon-2"></i></div>
+        <span class="step-dot-label">Presença Digital</span>
+      </div>
+      <div class="step-dot" data-step="3" onclick="goToStep(3)">
+        <div class="step-dot-circle"><i class="fas fa-bullhorn" id="step-icon-3"></i></div>
+        <span class="step-dot-label">Marketing</span>
+      </div>
+      <div class="step-dot" data-step="4" onclick="goToStep(4)">
+        <div class="step-dot-circle"><i class="fas fa-headset" id="step-icon-4"></i></div>
+        <span class="step-dot-label">Atendimento</span>
+      </div>
+      <div class="step-dot" data-step="5" onclick="goToStep(5)">
+        <div class="step-dot-circle"><i class="fas fa-microchip" id="step-icon-5"></i></div>
+        <span class="step-dot-label">Tecnologia</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FORM ==================== -->
+  <div class="form-card" id="form-card">
+
+    <!-- STEP 1 — Dados da empresa -->
+    <section class="form-step active" data-step="1">
+      <div class="step-header">
+        <div class="step-icon blue"><i class="fas fa-building"></i></div>
+        <div class="step-header-text">
+          <h2>Dados da Empresa</h2>
+          <p>Informações básicas da concessionária para identificação do perfil.</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="field-row cols-2">
+          <div class="field-group">
+            <label class="field-label">Nome da empresa <span class="required">*</span></label>
+            <input type="text" id="f-nome" class="field-input" placeholder="Ex: Veículos Alfa Motors" />
+            <span class="field-error" id="err-nome">Campo obrigatório.</span>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Cidade <span class="required">*</span></label>
+            <input type="text" id="f-cidade" class="field-input" placeholder="Ex: São Paulo – SP" />
+            <span class="field-error" id="err-cidade">Campo obrigatório.</span>
+          </div>
+        </div>
+        <div class="field-row cols-3">
+          <div class="field-group">
+            <label class="field-label">Qtd de carros em estoque</label>
+            <input type="number" id="f-estoque" class="field-input" placeholder="Ex: 80" min="0" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Ticket médio dos veículos</label>
+            <input type="text" id="f-ticket" class="field-input" placeholder="Ex: R$ 65.000" />
+            <span class="field-hint">Valor aproximado de venda</span>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Nº de vendedores</label>
+            <input type="number" id="f-vendedores" class="field-input" placeholder="Ex: 5" min="1" />
+          </div>
+        </div>
+        <div class="field-row cols-2">
+          <div class="field-group">
+            <label class="field-label">Telefone principal</label>
+            <input type="tel" id="f-telefone" class="field-input" placeholder="(11) 3000-0000" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">WhatsApp da loja</label>
+            <input type="tel" id="f-whatsapp" class="field-input" placeholder="(11) 90000-0000" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 2 — Presença Digital -->
+    <section class="form-step" data-step="2">
+      <div class="step-header">
+        <div class="step-icon orange"><i class="fas fa-globe"></i></div>
+        <div class="step-header-text">
+          <h2>Presença Digital</h2>
+          <p>Mapeamento dos canais digitais já existentes na empresa.</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="field-group">
+          <div class="section-label">Canais e infraestrutura que a empresa já possui</div>
+          <div class="checkbox-grid">
+            <div class="checkbox-item">
+              <input type="checkbox" id="p-instagram" />
+              <label for="p-instagram" class="checkbox-label">
+                <span class="checkbox-icon"><i class="fas fa-check"></i></span>
+                <i class="fab fa-instagram" style="color:#e1306c;font-size:16px"></i> Instagram
+              </label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="p-facebook" />
+              <label for="p-facebook" class="checkbox-label">
+                <span class="checkbox-icon"><i class="fas fa-check"></i></span>
+                <i class="fab fa-facebook" style="color:#1877f2;font-size:16px"></i> Facebook
+              </label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="p-google" />
+              <label for="p-google" class="checkbox-label">
+                <span class="checkbox-icon"><i class="fas fa-check"></i></span>
+                <i class="fab fa-google" style="color:#4285f4;font-size:16px"></i> Google Meu Negócio
+              </label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="p-site" onchange="toggleSiteType()" />
+              <label for="p-site" class="checkbox-label">
+                <span class="checkbox-icon"><i class="fas fa-check"></i></span>
+                <i class="fas fa-laptop-code" style="color:#7c3aed;font-size:15px"></i> Site próprio
+              </label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="p-dominio" />
+              <label for="p-dominio" class="checkbox-label">
+                <span class="checkbox-icon"><i class="fas fa-check"></i></span>
+                <i class="fas fa-link" style="color:#0891b2;font-size:15px"></i> Domínio próprio
+              </label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="p-email" />
+              <label for="p-email" class="checkbox-label">
+                <span class="checkbox-icon"><i class="fas fa-check"></i></span>
+                <i class="fas fa-envelope" style="color:#059669;font-size:15px"></i> Email corporativo
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Conditional: site type -->
+        <div class="conditional-field" id="site-type-field">
+          <div class="field-group" style="margin-bottom:0">
+            <label class="field-label">Qual o tipo do site?</label>
+            <div class="radio-grid cols-2">
+              <div class="radio-item">
+                <input type="radio" name="site-type" id="st-1" value="institucional" />
+                <label for="st-1" class="radio-label">
+                  <span class="radio-icon"><i class="fas fa-circle"></i></span>
+                  Site institucional simples
+                </label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" name="site-type" id="st-2" value="catalogo" />
+                <label for="st-2" class="radio-label">
+                  <span class="radio-icon"><i class="fas fa-circle"></i></span>
+                  Site com catálogo de carros
+                </label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" name="site-type" id="st-3" value="formularios" />
+                <label for="st-3" class="radio-label">
+                  <span class="radio-icon"><i class="fas fa-circle"></i></span>
+                  Site com formulários de contato
+                </label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" name="site-type" id="st-4" value="leads" />
+                <label for="st-4" class="radio-label">
+                  <span class="radio-icon"><i class="fas fa-circle"></i></span>
+                  Site com sistema de leads
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3 — Marketing -->
+    <section class="form-step" data-step="3">
+      <div class="step-header">
+        <div class="step-icon green"><i class="fas fa-bullhorn"></i></div>
+        <div class="step-header-text">
+          <h2>Marketing Atual</h2>
+          <p>Análise da estratégia de tráfego pago e geração de leads existente.</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="field-group">
+          <div class="section-label">A empresa já roda anúncios pagos?</div>
+          <div class="radio-grid cols-2">
+            <div class="radio-item">
+              <input type="radio" name="anuncios" id="an-nao" value="nao" />
+              <label for="an-nao" class="radio-label">
+                <span class="radio-icon"><i class="fas fa-circle"></i></span>
+                <i class="fas fa-ban" style="color:var(--danger);font-size:14px"></i>
+                Não roda anúncios
+              </label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" name="anuncios" id="an-insta" value="instagram" />
+              <label for="an-insta" class="radio-label">
+                <span class="radio-icon"><i class="fas fa-circle"></i></span>
+                <i class="fab fa-instagram" style="color:#e1306c;font-size:14px"></i>
+                Anúncios no Instagram
+              </label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" name="anuncios" id="an-fb" value="facebook" />
+              <label for="an-fb" class="radio-label">
+                <span class="radio-icon"><i class="fas fa-circle"></i></span>
+                <i class="fab fa-facebook" style="color:#1877f2;font-size:14px"></i>
+                Anúncios no Facebook
+              </label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" name="anuncios" id="an-google" value="google" />
+              <label for="an-google" class="radio-label">
+                <span class="radio-icon"><i class="fas fa-circle"></i></span>
+                <i class="fab fa-google" style="color:#4285f4;font-size:14px"></i>
+                Anúncios no Google
+              </label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" name="anuncios" id="an-multi" value="multiplas" />
+              <label for="an-multi" class="radio-label">
+                <span class="radio-icon"><i class="fas fa-circle"></i></span>
+                <i class="fas fa-layer-group" style="color:var(--accent);font-size:14px"></i>
+                Múltiplas plataformas
+              </label>
+            </div>
+          </div>
+          <span class="field-error" id="err-anuncios">Selecione uma opção.</span>
+        </div>
+
+        <div class="field-group">
+          <div class="section-label">Quantos leads por mês aproximadamente?</div>
+          <div class="radio-grid cols-4">
+            <div class="radio-item">
+              <input type="radio" name="leads" id="l-0" value="0-10" />
+              <label for="l-0" class="radio-label" style="justify-content:center;flex-direction:column;gap:4px;text-align:center">
+                <span class="radio-icon" style="margin:0 auto"><i class="fas fa-circle"></i></span>
+                <span>0 – 10</span>
+              </label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" name="leads" id="l-10" value="10-30" />
+              <label for="l-10" class="radio-label" style="justify-content:center;flex-direction:column;gap:4px;text-align:center">
+                <span class="radio-icon" style="margin:0 auto"><i class="fas fa-circle"></i></span>
+                <span>10 – 30</span>
+              </label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" name="leads" id="l-30" value="30-60" />
+              <label for="l-30" class="radio-label" style="justify-content:center;flex-direction:column;gap:4px;text-align:center">
+                <span class="radio-icon" style="margin:0 auto"><i class="fas fa-circle"></i></span>
+                <span>30 – 60</span>
+              </label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" name="leads" id="l-60" value="60+" />
+              <label for="l-60" class="radio-label" style="justify-content:center;flex-direction:column;gap:4px;text-align:center">
+                <span class="radio-icon" style="margin:0 auto"><i class="fas fa-circle"></i></span>
+                <span>60+</span>
+              </label>
+            </div>
+          </div>
+          <span class="field-error" id="err-leads">Selecione uma opção.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 4 — Atendimento -->
+    <section class="form-step" data-step="4">
+      <div class="step-header">
+        <div class="step-icon purple"><i class="fas fa-headset"></i></div>
+        <div class="step-header-text">
+          <h2>Atendimento</h2>
+          <p>Capacidade de resposta e gestão do WhatsApp da equipe comercial.</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="field-group">
+          <div class="section-label">Quantas pessoas respondem o WhatsApp?</div>
+          <div class="radio-grid cols-3">
+            <div class="radio-item">
+              <input type="radio" name="pessoas-wpp" id="pw-1" value="1" />
+              <label for="pw-1" class="radio-label" style="justify-content:center;flex-direction:column;gap:6px;text-align:center">
+                <span class="radio-icon" style="margin:0 auto"><i class="fas fa-circle"></i></span>
+                <i class="fas fa-user" style="font-size:20px;color:var(--primary-mid)"></i>
+                <span>1 pessoa</span>
+              </label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" name="pessoas-wpp" id="pw-2" value="2" />
+              <label for="pw-2" class="radio-label" style="justify-content:center;flex-direction:column;gap:6px;text-align:center">
+                <span class="radio-icon" style="margin:0 auto"><i class="fas fa-circle"></i></span>
+                <i class="fas fa-user-friends" style="font-size:20px;color:var(--primary-mid)"></i>
+                <span>2 pessoas</span>
+              </label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" name="pessoas-wpp" id="pw-3" value="3+" />
+              <label for="pw-3" class="radio-label" style="justify-content:center;flex-direction:column;gap:6px;text-align:center">
+                <span class="radio-icon" style="margin:0 auto"><i class="fas fa-circle"></i></span>
+                <i class="fas fa-users" style="font-size:20px;color:var(--primary-mid)"></i>
+                <span>3 ou mais</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <div class="section-label">Tempo médio de resposta ao lead</div>
+          <div class="radio-grid cols-2">
+            <div class="radio-item">
+              <input type="radio" name="tempo-resp" id="tr-imediato" value="imediato" />
+              <label for="tr-imediato" class="radio-label">
+                <span class="radio-icon"><i class="fas fa-circle"></i></span>
+                <i class="fas fa-bolt" style="color:var(--success)"></i> Imediato
+              </label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" name="tempo-resp" id="tr-10min" value="ate-10min" />
+              <label for="tr-10min" class="radio-label">
+                <span class="radio-icon"><i class="fas fa-circle"></i></span>
+                <i class="fas fa-clock" style="color:var(--warning)"></i> Até 10 minutos
+              </label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" name="tempo-resp" id="tr-1h" value="ate-1h" />
+              <label for="tr-1h" class="radio-label">
+                <span class="radio-icon"><i class="fas fa-circle"></i></span>
+                <i class="fas fa-hourglass-half" style="color:var(--accent)"></i> Até 1 hora
+              </label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" name="tempo-resp" id="tr-mais" value="mais-1h" />
+              <label for="tr-mais" class="radio-label">
+                <span class="radio-icon"><i class="fas fa-circle"></i></span>
+                <i class="fas fa-hourglass-end" style="color:var(--danger)"></i> Mais de 1 hora
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <div class="section-label">Já perderam clientes por demora no atendimento?</div>
+          <div class="radio-grid cols-3">
+            <div class="radio-item">
+              <input type="radio" name="perdeu" id="pe-sim" value="sim" />
+              <label for="pe-sim" class="radio-label" style="justify-content:center">
+                <span class="radio-icon"><i class="fas fa-circle"></i></span>
+                <i class="fas fa-times-circle" style="color:var(--danger)"></i> Sim
+              </label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" name="perdeu" id="pe-nao" value="nao" />
+              <label for="pe-nao" class="radio-label" style="justify-content:center">
+                <span class="radio-icon"><i class="fas fa-circle"></i></span>
+                <i class="fas fa-check-circle" style="color:var(--success)"></i> Não
+              </label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" name="perdeu" id="pe-ns" value="nao-sabem" />
+              <label for="pe-ns" class="radio-label" style="justify-content:center">
+                <span class="radio-icon"><i class="fas fa-circle"></i></span>
+                <i class="fas fa-question-circle" style="color:var(--text-muted)"></i> Não sabem
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 5 — Tecnologia -->
+    <section class="form-step" data-step="5">
+      <div class="step-header">
+        <div class="step-icon cyan"><i class="fas fa-microchip"></i></div>
+        <div class="step-header-text">
+          <h2>Estrutura Tecnológica</h2>
+          <p>Ferramentas e sistemas já utilizados pela concessionária.</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="field-group">
+          <div class="section-label">A empresa já possui:</div>
+          <div class="checkbox-grid">
+            <div class="checkbox-item">
+              <input type="checkbox" id="t-crm" onchange="toggleCrmField()" />
+              <label for="t-crm" class="checkbox-label">
+                <span class="checkbox-icon"><i class="fas fa-check"></i></span>
+                <i class="fas fa-database" style="color:var(--primary-mid);font-size:15px"></i> CRM
+              </label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="t-gestao" />
+              <label for="t-gestao" class="checkbox-label">
+                <span class="checkbox-icon"><i class="fas fa-check"></i></span>
+                <i class="fas fa-filter" style="color:var(--accent);font-size:15px"></i> Gestão de Leads
+              </label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="t-wppapi" />
+              <label for="t-wppapi" class="checkbox-label">
+                <span class="checkbox-icon"><i class="fas fa-check"></i></span>
+                <i class="fab fa-whatsapp" style="color:#25d366;font-size:16px"></i> WhatsApp Business API
+              </label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="t-automacao" />
+              <label for="t-automacao" class="checkbox-label">
+                <span class="checkbox-icon"><i class="fas fa-check"></i></span>
+                <i class="fas fa-robot" style="color:#7c3aed;font-size:15px"></i> Automação de Marketing
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Conditional: qual CRM -->
+        <div class="conditional-field" id="crm-name-field">
+          <div class="field-group" style="margin-bottom:0">
+            <label class="field-label">Qual CRM utilizam?</label>
+            <input type="text" id="t-crm-nome" class="field-input" placeholder="Ex: RD Station, HubSpot, Pipedrive…" />
+          </div>
+        </div>
+
+        <div class="field-group" style="margin-top:20px">
+          <div class="section-label">Observações do consultor</div>
+          <textarea id="f-obs" class="field-input" rows="4" placeholder="Anote contextos adicionais, dores específicas, oportunidades identificadas na conversa…"></textarea>
+          <span class="field-hint">Essas observações aparecem na proposta PDF.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation -->
+    <div class="form-nav" id="form-nav">
+      <button class="btn btn-ghost" id="btn-prev" onclick="prevStep()" style="visibility:hidden">
+        <i class="fas fa-arrow-left"></i> Anterior
+      </button>
+      <button class="btn btn-primary" id="btn-next" onclick="nextStep()">
+        Próximo <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== RESULTS ==================== -->
+  <div id="results-page">
+
+    <!-- Hero -->
+    <div class="results-hero">
+      <div class="results-hero-top">
+        <div>
+          <div class="results-hero-title" id="r-hero-title">Diagnóstico Concluído</div>
+          <div class="results-hero-subtitle" id="r-hero-subtitle">Gerado em —</div>
+        </div>
+        <div class="results-hero-badge" id="r-plan-badge">
+          <i class="fas fa-star"></i> Plano Recomendado
+        </div>
+      </div>
+      <div class="results-hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-value" id="r-score-hero">—</div>
+          <div class="hero-stat-label">Score Digital</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value" id="r-leads-hero">—</div>
+          <div class="hero-stat-label">Leads Estimados/mês</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value" id="r-roi-hero">—</div>
+          <div class="hero-stat-label">Receita Garantida (contrato)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid row 1: Score + Diagnóstico -->
+    <div class="results-grid">
+      <div class="result-card">
+        <div class="result-card-title"><i class="fas fa-chart-pie"></i> Score de Maturidade Digital</div>
+        <div class="score-gauge-wrap">
+          <svg viewBox="0 0 120 120" class="gauge">
+            <circle class="gauge-track" cx="60" cy="60" r="50" transform="rotate(-90 60 60)" />
+            <circle class="gauge-fill" id="gauge-circle" cx="60" cy="60" r="50"
+              stroke-dasharray="314.16" stroke-dashoffset="314.16" transform="rotate(-90 60 60)" />
+            <text class="gauge-center-text" x="60" y="56" id="gauge-text">0</text>
+            <text class="gauge-center-sub" x="60" y="70" font-size="9" fill="#64748b">/ 100</text>
+          </svg>
+          <div class="score-levels">
+            <div class="score-level-item" id="sl-nivel">
+              <span>Nível Digital</span>
+              <span class="badge" id="sl-nivel-badge">—</span>
+            </div>
+            <div class="score-level-item" id="sl-infra">
+              <span>Infraestrutura</span>
+              <span class="badge" id="sl-infra-badge">—</span>
+            </div>
+            <div class="score-level-item" id="sl-leads">
+              <span>Potencial de Leads</span>
+              <span class="badge" id="sl-leads-badge">—</span>
+            </div>
+            <div class="score-level-item" id="sl-atend">
+              <span>Atendimento</span>
+              <span class="badge" id="sl-atend-badge">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-card-title"><i class="fas fa-exclamation-triangle"></i> Alertas & Oportunidades</div>
+        <div class="alert-list" id="r-alerts">
+          <!-- dynamically populated -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid row 2: Planos -->
+    <div class="result-card" style="margin-bottom:16px">
+      <div class="result-card-title"><i class="fas fa-trophy"></i> Comparativo de Planos</div>
+      <div class="plans-row" id="r-plans">
+        <!-- dynamically populated -->
+      </div>
+    </div>
+
+    <!-- Grid row 3: Investimento + ROI -->
+    <div class="results-grid">
+      <div class="result-card">
+        <div class="result-card-title"><i class="fas fa-dollar-sign"></i> Investimento do Cliente</div>
+        <div class="invest-row" style="grid-template-columns:1fr 1fr">
+          <div class="invest-item">
+            <div class="invest-label">Ativação (única)</div>
+            <div class="invest-value primary" id="r-setup">—</div>
+          </div>
+          <div class="invest-item">
+            <div class="invest-label">Mensalidade</div>
+            <div class="invest-value accent" id="r-mensalidade">—</div>
+          </div>
+        </div>
+        <div class="invest-row" style="grid-template-columns:1fr 1fr;margin-top:10px;margin-bottom:0">
+          <div class="invest-item">
+            <div class="invest-label">Contrato mínimo</div>
+            <div class="invest-value" id="r-contrato" style="font-size:16px">—</div>
+          </div>
+          <div class="invest-item" style="background:rgba(0,212,255,.06);border-color:rgba(0,212,255,.2)">
+            <div class="invest-label" style="color:var(--cyan);opacity:.8">Receita mínima garantida</div>
+            <div class="invest-value success" id="r-receita-min">—</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;font-size:11.5px;color:var(--text-muted);line-height:1.7;padding:10px 12px;background:var(--surface-2);border-radius:var(--radius-sm);border:1px solid var(--border)">
+          <i class="fas fa-info-circle" style="color:var(--cyan);margin-right:5px;opacity:.7"></i>
+          Plano <strong id="r-plan-name-small" style="color:var(--text-mid)">—</strong> · Preço fixo, escopo fechado, sem surpresas na fatura.
+          Receita garantida = ativação + (<strong id="r-leads-est" style="color:var(--text-mid)">—</strong> mensalidades).
+        </div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-card-title"><i class="fas fa-seedling"></i> Retorno Potencial</div>
+        <div class="roi-block" id="r-roi-block">
+          <div class="roi-icon"><i class="fas fa-trending-up"></i></div>
+          <div class="roi-text">
+            <h4 id="r-roi-title">—</h4>
+            <p id="r-roi-desc">—</p>
+          </div>
+        </div>
+        <div style="margin-top:16px">
+          <div class="invest-row" style="grid-template-columns:1fr 1fr;gap:10px;margin-bottom:0">
+            <div class="invest-item">
+              <div class="invest-label">Leads atuais/mês</div>
+              <div class="invest-value" id="r-leads-atual" style="font-size:18px">—</div>
+            </div>
+            <div class="invest-item">
+              <div class="invest-label">Leads estimados/mês</div>
+              <div class="invest-value success" id="r-leads-new" style="font-size:18px">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="result-card" style="margin-bottom:16px">
+      <div class="result-card-title"><i class="fas fa-calendar-alt"></i> Timeline de Implementação</div>
+      <div class="timeline" id="r-timeline">
+        <!-- dynamically populated -->
+      </div>
+    </div>
+
+    <!-- Checklist -->
+    <div class="result-card" style="margin-bottom:16px">
+      <div class="result-card-title"><i class="fas fa-tasks"></i> Checklist de Implementação</div>
+      <div id="r-checklist">
+        <!-- dynamically populated -->
+      </div>
+    </div>
+
+    <!-- Export -->
+    <div class="export-bar">
+      <div class="export-bar-text">
+        <h4>Proposta Comercial Pronta</h4>
+        <p>Exporte o diagnóstico completo como PDF para enviar ao cliente.</p>
+      </div>
+      <div class="export-actions">
+        <button class="btn btn-ghost" onclick="printProposal()">
+          <i class="fas fa-print"></i> Imprimir
+        </button>
+        <button class="btn btn-accent btn-lg" onclick="exportPDF()">
+          <i class="fas fa-file-pdf"></i> Exportar PDF
+        </button>
+      </div>
+    </div>
+
+    <div class="restart-bar">
+      <button class="btn btn-ghost" onclick="restartForm()">
+        <i class="fas fa-redo"></i> Novo Diagnóstico
+      </button>
+    </div>
+  </div>
+
+</main>
+
+<footer class="app-footer">
+  <span style="color:var(--text-mid)">Ronal<span style="color:var(--cyan)">Digital</span></span> &copy; <span id="footer-year"></span> &nbsp;&mdash;&nbsp; Ferramenta interna de diagnóstico &nbsp;&mdash;&nbsp; <span style="color:var(--danger);font-weight:700">Uso restrito aos sócios</span>
+</footer>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+/* ============================================================
+   STATE
+   ============================================================ */
+let currentStep = 1;
+const TOTAL_STEPS = 5;
+
+const PLAN_CONFIG = {
+  Starter: {
+    price:    797,
+    setup:    1500,
+    contract: 3,      // meses mínimo
+    leads_mult: 1.5,
+    features: [
+      { text: 'Landing page de captação', active: true },
+      { text: 'WhatsApp Business configurado', active: true },
+      { text: 'CRM básico de leads', active: true },
+      { text: 'Automação de follow-up (D+1, D+3)', active: true },
+      { text: 'Relatório mensal de leads', active: true },
+      { text: 'Integração multi-canal', active: false },
+      { text: 'Gestor de tráfego dedicado', active: false },
+    ]
+  },
+  Growth: {
+    price:    1297,
+    setup:    2500,
+    contract: 3,
+    leads_mult: 2.0,
+    features: [
+      { text: 'Landing page de captação', active: true },
+      { text: 'WhatsApp Business API', active: true },
+      { text: 'CRM completo + pipeline', active: true },
+      { text: 'Automação de follow-up (D+1, D+3, D+7)', active: true },
+      { text: 'Relatório semanal de leads', active: true },
+      { text: 'Integração multi-canal', active: true },
+      { text: 'Gestor de tráfego dedicado', active: false },
+    ]
+  },
+  Pro: {
+    price:    1997,
+    setup:    3500,
+    contract: 6,
+    leads_mult: 3.0,
+    features: [
+      { text: 'Landing page de captação', active: true },
+      { text: 'WhatsApp Business API', active: true },
+      { text: 'CRM completo + pipeline', active: true },
+      { text: 'Automação avançada multi-canal', active: true },
+      { text: 'Relatório diário de leads', active: true },
+      { text: 'Integração multi-canal', active: true },
+      { text: 'Gestor de tráfego dedicado', active: true },
+    ]
+  }
+};
+
+/* ============================================================
+   STEP NAVIGATION
+   ============================================================ */
+function updateProgress() {
+  const pct = (currentStep / TOTAL_STEPS) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-count').textContent = `Etapa ${currentStep} de ${TOTAL_STEPS}`;
+
+  document.querySelectorAll('.step-dot').forEach(dot => {
+    const s = parseInt(dot.dataset.step);
+    dot.classList.remove('active', 'done');
+    if (s === currentStep) dot.classList.add('active');
+    else if (s < currentStep) dot.classList.add('done');
+  });
+
+  // Step dot icons for done steps
+  for (let i = 1; i < currentStep; i++) {
+    const ic = document.getElementById('step-icon-' + i);
+    if (ic) { ic.className = 'fas fa-check'; }
+  }
+
+  document.getElementById('btn-prev').style.visibility = currentStep > 1 ? 'visible' : 'hidden';
+  const nextBtn = document.getElementById('btn-next');
+  if (currentStep === TOTAL_STEPS) {
+    nextBtn.innerHTML = '<i class="fas fa-magic"></i> Gerar Diagnóstico';
+    nextBtn.className = 'btn btn-accent';
+  } else {
+    nextBtn.innerHTML = 'Próximo <i class="fas fa-arrow-right"></i>';
+    nextBtn.className = 'btn btn-primary';
+  }
+}
+
+function showStep(n) {
+  document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+  const target = document.querySelector(`.form-step[data-step="${n}"]`);
+  if (target) target.classList.add('active');
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goToStep(n) {
+  if (n >= currentStep) return; // only go back
+  currentStep = n;
+  showStep(n);
+}
+
+function nextStep() {
+  if (!validateStep(currentStep)) return;
+  if (currentStep === TOTAL_STEPS) {
+    generateResults();
+    return;
+  }
+  currentStep++;
+  showStep(currentStep);
+}
+
+function prevStep() {
+  if (currentStep <= 1) return;
+  currentStep--;
+  showStep(currentStep);
+}
+
+/* ============================================================
+   VALIDATION
+   ============================================================ */
+function validateStep(step) {
+  let valid = true;
+
+  if (step === 1) {
+    valid = requireField('f-nome', 'err-nome') && valid;
+    valid = requireField('f-cidade', 'err-cidade') && valid;
+  }
+  if (step === 3) {
+    valid = requireRadio('anuncios', 'err-anuncios') && valid;
+    valid = requireRadio('leads', 'err-leads') && valid;
+  }
+
+  return valid;
+}
+
+function requireField(id, errId) {
+  const el = document.getElementById(id);
+  const err = document.getElementById(errId);
+  if (!el.value.trim()) {
+    el.classList.add('error');
+    if (err) err.classList.add('show');
+    return false;
+  }
+  el.classList.remove('error');
+  if (err) err.classList.remove('show');
+  return true;
+}
+
+function requireRadio(name, errId) {
+  const selected = document.querySelector(`input[name="${name}"]:checked`);
+  const err = document.getElementById(errId);
+  if (!selected) {
+    if (err) err.classList.add('show');
+    return false;
+  }
+  if (err) err.classList.remove('show');
+  return true;
+}
+
+/* ============================================================
+   CONDITIONAL FIELDS
+   ============================================================ */
+function toggleSiteType() {
+  const checked = document.getElementById('p-site').checked;
+  document.getElementById('site-type-field').classList.toggle('show', checked);
+}
+
+function toggleCrmField() {
+  const checked = document.getElementById('t-crm').checked;
+  document.getElementById('crm-name-field').classList.toggle('show', checked);
+}
+
+/* ============================================================
+   DATA COLLECTION
+   ============================================================ */
+function collectData() {
+  return {
+    empresa: {
+      nome:       val('f-nome'),
+      cidade:     val('f-cidade'),
+      estoque:    val('f-estoque'),
+      ticket:     val('f-ticket'),
+      vendedores: val('f-vendedores'),
+      telefone:   val('f-telefone'),
+      whatsapp:   val('f-whatsapp'),
+    },
+    presenca: {
+      instagram:  chk('p-instagram'),
+      facebook:   chk('p-facebook'),
+      google:     chk('p-google'),
+      site:       chk('p-site'),
+      dominio:    chk('p-dominio'),
+      email:      chk('p-email'),
+      tipoSite:   radio('site-type'),
+    },
+    marketing: {
+      anuncios:   radio('anuncios'),
+      leads:      radio('leads'),
+    },
+    atendimento: {
+      pessoas:    radio('pessoas-wpp'),
+      tempo:      radio('tempo-resp'),
+      perdeu:     radio('perdeu'),
+    },
+    tech: {
+      crm:        chk('t-crm'),
+      gestao:     chk('t-gestao'),
+      wppapi:     chk('t-wppapi'),
+      automacao:  chk('t-automacao'),
+      crmNome:    val('t-crm-nome'),
+    },
+    obs: val('f-obs'),
+  };
+}
+
+function val(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+function chk(id) { const el = document.getElementById(id); return el ? el.checked : false; }
+function radio(name) { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : ''; }
+
+/* ============================================================
+   ANALYSIS ENGINE
+   ============================================================ */
+function parseLeadsRange(range) {
+  const map = { '0-10': 5, '10-30': 20, '30-60': 45, '60+': 75 };
+  return map[range] || 5;
+}
+
+function parseTicket(raw) {
+  const cleaned = raw.replace(/[^\d,\.]/g, '').replace(',', '.');
+  return parseFloat(cleaned) || 60000;
+}
+
+function calcDigitalScore(d) {
+  let s = 0;
+  if (d.presenca.instagram) s += 8;
+  if (d.presenca.facebook) s += 8;
+  if (d.presenca.google) s += 14;
+  if (d.presenca.site) s += 12;
+  if (d.presenca.dominio) s += 8;
+  if (d.presenca.email) s += 6;
+  if (d.presenca.tipoSite === 'formularios') s += 6;
+  if (d.presenca.tipoSite === 'leads') s += 12;
+  if (d.tech.crm) s += 12;
+  if (d.tech.gestao) s += 6;
+  if (d.tech.wppapi) s += 10;
+  if (d.tech.automacao) s += 10;
+  if (d.marketing.anuncios === 'instagram' || d.marketing.anuncios === 'facebook') s += 8;
+  if (d.marketing.anuncios === 'google') s += 10;
+  if (d.marketing.anuncios === 'multiplas') s += 14;
+  return Math.min(s, 100);
+}
+
+function calcInfraScore(d) {
+  let s = 0;
+  if (d.tech.crm) s++;
+  if (d.tech.gestao) s++;
+  if (d.tech.wppapi) s++;
+  if (d.tech.automacao) s++;
+  if (d.presenca.dominio) s++;
+  if (d.presenca.email) s++;
+  return s; // max 6
+}
+
+function calcAtendScore(d) {
+  const tempoMap = { 'imediato': 4, 'ate-10min': 3, 'ate-1h': 2, 'mais-1h': 1, '': 2 };
+  const pessoaMap = { '1': 1, '2': 2, '3+': 3, '': 1 };
+  return tempoMap[d.atendimento.tempo] + pessoaMap[d.atendimento.pessoas];
+}
+
+function recommendPlan(d, leadsAtual, digitalScore) {
+  if (leadsAtual >= 60 || digitalScore >= 65 || d.marketing.anuncios === 'multiplas') return 'Pro';
+  if (leadsAtual >= 30 || (d.marketing.anuncios !== 'nao' && leadsAtual >= 10)) return 'Growth';
+  return 'Starter';
+}
+
+function generateChecklist(d, plan) {
+  const items = [];
+  const add = (category, task, priority) => items.push({ category, task, priority });
+
+  // Infrastructure
+  if (!d.presenca.dominio)  add('Infraestrutura', 'Registrar domínio profissional para a empresa', 'alta');
+  if (!d.presenca.email)    add('Infraestrutura', 'Criar email corporativo (ex: contato@empresa.com.br)', 'alta');
+  if (!d.presenca.google)   add('Presença Local', 'Criar e otimizar perfil Google Meu Negócio', 'alta');
+  if (!d.presenca.instagram) add('Social Media', 'Criar perfil no Instagram e configurar Bio', 'media');
+  if (!d.presenca.facebook)  add('Social Media', 'Criar página no Facebook com dados completos', 'media');
+
+  // Site / Landing Page
+  if (!d.presenca.site) {
+    add('Marketing Digital', 'Criar landing page de captação de leads', 'alta');
+  } else {
+    if (d.presenca.tipoSite === 'institucional' || d.presenca.tipoSite === 'catalogo') {
+      add('Marketing Digital', 'Adicionar formulário de captação de leads ao site', 'alta');
+    }
+    if (d.presenca.tipoSite !== 'leads') {
+      add('Marketing Digital', 'Instalar pixel de rastreamento (Meta + Google Tag Manager)', 'alta');
+    }
+    add('Marketing Digital', 'Integrar formulário do site com o CRM RonalDigital', 'media');
+  }
+
+  // CRM
+  if (!d.tech.crm) {
+    add('CRM', 'Implementar CRM RonalDigital com pipeline personalizado', 'alta');
+  } else {
+    add('CRM', `Migração/integração do ${d.tech.crmNome || 'CRM atual'} com plataforma RonalDigital`, 'alta');
+  }
+
+  // WhatsApp
+  if (!d.tech.wppapi) add('Automação', 'Configurar WhatsApp Business API para automação', 'alta');
+  add('Automação', 'Criar chatbot de qualificação de leads no WhatsApp', 'alta');
+  add('Automação', 'Configurar sequência de follow-up automático (D+1, D+3, D+7)', 'alta');
+  if (!d.tech.automacao) add('Automação', 'Implementar fluxos de automação de marketing', 'media');
+
+  // Campaigns
+  if (d.marketing.anuncios === 'nao') {
+    add('Campanhas', 'Criar campanha inicial de tráfego pago (Meta Ads)', 'alta');
+    add('Campanhas', 'Configurar Google Ads para busca de compradores locais', 'media');
+  } else {
+    add('Campanhas', 'Auditar campanhas existentes e otimizar criativos', 'media');
+    add('Campanhas', 'Implementar remarketing para visitantes do site', 'media');
+  }
+
+  // Onboarding
+  add('Onboarding', 'Treinamento da equipe de vendas no uso do CRM', 'media');
+  add('Onboarding', 'Definir SLA de atendimento de leads (tempo de resposta)', 'alta');
+  if (plan === 'Pro') add('Onboarding', 'Configurar dashboard de KPIs em tempo real', 'media');
+
+  return items;
+}
+
+function generateAlerts(d, leadsAtual, digitalScore) {
+  const alerts = [];
+
+  if (d.atendimento.tempo === 'mais-1h') {
+    alerts.push({ type: 'danger', icon: 'fa-fire', text: 'Tempo de resposta acima de 1 hora — estudos mostram que 78% dos leads que não são respondidos em 5 minutos vão para o concorrente.' });
+  }
+  if (d.atendimento.perdeu === 'sim' || d.atendimento.perdeu === 'nao-sabem') {
+    alerts.push({ type: 'warning', icon: 'fa-triangle-exclamation', text: 'Provável perda de clientes por atendimento lento. Automação de resposta imediata é prioridade crítica.' });
+  }
+  if (!d.presenca.google) {
+    alerts.push({ type: 'warning', icon: 'fa-map-marker-alt', text: 'Sem Google Meu Negócio: a empresa não aparece em pesquisas locais como "concessionária perto de mim".' });
+  }
+  if (!d.tech.crm) {
+    alerts.push({ type: 'danger', icon: 'fa-database', text: 'Sem CRM: leads são perdidos no WhatsApp pessoal. Impossível fazer acompanhamento estruturado ou medir conversão.' });
+  }
+  if (d.marketing.anuncios === 'nao' && leadsAtual < 10) {
+    alerts.push({ type: 'warning', icon: 'fa-chart-line', text: 'Baixíssima geração de leads. A concessionária depende apenas de clientes que chegam espontaneamente.' });
+  }
+  if (!d.presenca.dominio) {
+    alerts.push({ type: 'info', icon: 'fa-globe', text: 'Sem domínio próprio: a marca não tem presença digital profissional e dificulta campanhas de remarketing.' });
+  }
+  if (digitalScore < 30) {
+    alerts.push({ type: 'info', icon: 'fa-seedling', text: 'Ótima oportunidade: baixa maturidade digital significa grande espaço para crescimento acelerado com a solução RonalDigital.' });
+  }
+
+  if (alerts.length === 0) {
+    alerts.push({ type: 'info', icon: 'fa-check-circle', text: 'Cliente com boa estrutura digital. O foco será na integração e automação dos canais existentes.' });
+  }
+
+  return alerts;
+}
+
+function generateTimeline(plan) {
+  const base = {
+    Starter: [
+      { phase: 'Semana 1', title: 'Infraestrutura & Setup', desc: 'Domínio, email, landing page, WhatsApp Business e CRM básico configurados.', color: '#00d4ff' },
+      { phase: 'Semana 2', title: 'Captação & Automação', desc: 'Fluxo de atendimento automático, chatbot WhatsApp e formulários integrados.', color: '#00aacc' },
+      { phase: 'Semana 3+', title: 'Monitoramento', desc: 'Acompanhamento dos primeiros leads e ajustes de fluxo com a equipe.', color: '#0088aa' },
+    ],
+    Growth: [
+      { phase: 'Semana 1', title: 'Infraestrutura Completa', desc: 'Setup de domínio, email, CRM avançado, pipeline de vendas e integrações.', color: '#00d4ff' },
+      { phase: 'Semana 2', title: 'Automação & Campanhas', desc: 'WhatsApp API, chatbot, sequência de follow-up e campanha inicial Meta Ads.', color: '#00bbdd' },
+      { phase: 'Semana 3', title: 'Integração Multi-canal', desc: 'Conexão de Instagram, Facebook e Google com o CRM. Remarketing ativo.', color: '#00a0c0' },
+      { phase: 'Semana 4+', title: 'Otimização Contínua', desc: 'Análise semanal de KPIs, otimização de criativos e funil de vendas.', color: '#0088aa' },
+    ],
+    Pro: [
+      { phase: 'Semana 1-2', title: 'Infraestrutura Enterprise', desc: 'WhatsApp Business API, CRM completo, dashboard de KPIs e todas as integrações.', color: '#00d4ff' },
+      { phase: 'Semana 2-3', title: 'Automação Avançada', desc: 'Chatbot com IA, sequências multi-canal, lead scoring e qualificação automática.', color: '#00bbdd' },
+      { phase: 'Semana 3-4', title: 'Campanhas & Tráfego', desc: 'Gestor dedicado: Meta Ads, Google Ads, remarketing dinâmico com catálogo de veículos.', color: '#00a0c0' },
+      { phase: 'Mês 2+', title: 'Escala & Performance', desc: 'Relatórios diários, A/B de criativos, expansão de campanhas e gestão proativa.', color: '#007799' },
+    ],
+  };
+  return base[plan] || base['Starter'];
+}
+
+/* ============================================================
+   RENDER RESULTS
+   ============================================================ */
+function generateResults() {
+  const d = collectData();
+
+  const leadsAtual   = parseLeadsRange(d.marketing.leads);
+  const digitalScore = calcDigitalScore(d);
+  const infraScore   = calcInfraScore(d);
+  const atendScore   = calcAtendScore(d);
+  const plan         = recommendPlan(d, leadsAtual, digitalScore);
+  const cfg          = PLAN_CONFIG[plan];
+
+  const leadsEst         = Math.round(leadsAtual * cfg.leads_mult);
+  const setupVal         = cfg.setup;
+  const contractMonths   = cfg.contract;
+  const receitaGarantida = setupVal + cfg.price * contractMonths;
+  const ticketMedio      = parseTicket(d.empresa.ticket);
+  const additionalLeads  = leadsEst - leadsAtual;
+  const additionalRevenue = Math.round(additionalLeads * ticketMedio * 0.04 * 0.08);
+
+  const nivelDigital = digitalScore < 35 ? 'Básico' : digitalScore < 65 ? 'Intermediário' : 'Avançado';
+  const infraLevel   = infraScore  < 2   ? 'Baixa'  : infraScore  < 4   ? 'Média'         : 'Alta';
+  const potLeads     = leadsAtual  < 20  ? 'Baixo'  : leadsAtual  < 50  ? 'Médio'          : 'Alto';
+  const atendLabel   = atendScore  < 3   ? 'Lento'  : atendScore  < 5   ? 'Regular'        : 'Bom';
+
+  const levelColors = { 'Básico':'badge-orange','Intermediário':'badge-yellow','Avançado':'badge-green',
+                        'Baixa':'badge-red','Média':'badge-yellow','Alta':'badge-green',
+                        'Baixo':'badge-orange','Médio':'badge-blue','Alto':'badge-green',
+                        'Lento':'badge-red','Regular':'badge-yellow','Bom':'badge-green' };
+
+  // Hero
+  setText('r-hero-title', `Diagnóstico — ${d.empresa.nome || 'Cliente'}`);
+  setText('r-hero-subtitle', `${d.empresa.cidade || ''}  •  Gerado em ${formatDate()}`);
+  setText('r-plan-badge', `⭐ Plano ${plan} Recomendado`);
+  setText('r-score-hero', digitalScore);
+  setText('r-leads-hero', `+${leadsEst - leadsAtual}`);
+  setText('r-roi-hero', `R$${fmtMoney(receitaGarantida)}`);
+
+  // Score gauge
+  const circumference = 314.16;
+  const offset = circumference - (digitalScore / 100) * circumference;
+  const circle = document.getElementById('gauge-circle');
+  const gaugeColor = digitalScore < 35 ? '#f87171' : digitalScore < 65 ? '#fbbf24' : '#00d4ff';
+  circle.style.stroke = gaugeColor;
+  circle.style.filter = `drop-shadow(0 0 8px ${gaugeColor}60)`;
+  circle.style.strokeDashoffset = offset;
+  setText('gauge-text', digitalScore);
+
+  // Score levels
+  setLevelBadge('sl-nivel-badge', nivelDigital, levelColors[nivelDigital]);
+  setLevelBadge('sl-infra-badge', infraLevel, levelColors[infraLevel]);
+  setLevelBadge('sl-leads-badge', potLeads, levelColors[potLeads]);
+  setLevelBadge('sl-atend-badge', atendLabel, levelColors[atendLabel]);
+
+  // Alerts
+  const alerts = generateAlerts(d, leadsAtual, digitalScore);
+  document.getElementById('r-alerts').innerHTML = alerts.map(a =>
+    `<div class="alert-item ${a.type}"><i class="fas ${a.icon}"></i><span>${a.text}</span></div>`
+  ).join('');
+
+  // Plans
+  document.getElementById('r-plans').innerHTML = ['Starter','Growth','Pro'].map(p => {
+    const c = PLAN_CONFIG[p];
+    const isRec = p === plan;
+    return `
+      <div class="plan-card ${isRec ? 'recommended' : ''}">
+        ${isRec ? `<div class="plan-rec-badge">✓ Recomendado</div>` : ''}
+        <div class="plan-name">${p}</div>
+        <div class="plan-price">R$${fmtMoney(c.price)}<span>/mês</span></div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:4px;margin-bottom:12px">
+          Ativação: <strong style="color:var(--text-mid)">R$${fmtMoney(c.setup)}</strong>
+          &nbsp;·&nbsp; Contrato mín.: <strong style="color:var(--text-mid)">${c.contract} meses</strong>
+        </div>
+        <div class="plan-features">
+          ${c.features.map(f => `
+            <div class="plan-feat ${f.active ? '' : 'off'}">
+              <i class="fas ${f.active ? 'fa-check' : 'fa-times'}"></i>
+              ${f.text}
+            </div>`).join('')}
+        </div>
+      </div>`;
+  }).join('');
+
+  // Investment
+  setText('r-setup',           `R$${fmtMoney(setupVal)}`);
+  setText('r-mensalidade',     `R$${fmtMoney(cfg.price)}/mês`);
+  setText('r-contrato',        `${contractMonths} meses`);
+  setText('r-receita-min',     `R$${fmtMoney(receitaGarantida)}`);
+  setText('r-leads-est',       `${contractMonths}`);
+  setText('r-plan-name-small', plan);
+
+  // ROI
+  setText('r-roi-title', additionalRevenue > 0
+    ? `+R$${fmtMoney(additionalRevenue)}/mês em receita adicional estimada`
+    : 'Retorno estimado após informar ticket médio');
+  setText('r-roi-desc',
+    `Com o plano ${plan}, projetamos ${leadsEst} leads/mês (+${Math.round((cfg.leads_mult-1)*100)}%), com 4% de conversão e margem de 8%.`);
+  setText('r-leads-atual', leadsAtual);
+  setText('r-leads-new', leadsEst);
+
+  // Timeline
+  const timeline = generateTimeline(plan);
+  document.getElementById('r-timeline').innerHTML = timeline.map((item, i) => `
+    <div class="timeline-item">
+      <div class="timeline-line">
+        <div class="timeline-dot" style="background:${item.color};box-shadow:0 0 12px ${item.color}60">${i+1}</div>
+        ${i < timeline.length - 1 ? '<div class="timeline-connector"></div>' : ''}
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-phase">${item.phase}</div>
+        <div class="timeline-title">${item.title}</div>
+        <div class="timeline-desc">${item.desc}</div>
+      </div>
+    </div>`).join('');
+
+  // Checklist
+  const checklist = generateChecklist(d, plan);
+  const grouped = {};
+  checklist.forEach(item => {
+    if (!grouped[item.category]) grouped[item.category] = [];
+    grouped[item.category].push(item);
+  });
+
+  document.getElementById('r-checklist').innerHTML = Object.entries(grouped).map(([cat, items]) => `
+    <div class="checklist-group">
+      <div class="checklist-category"><i class="fas fa-folder-open" style="margin-right:6px"></i>${cat}</div>
+      ${items.map(item => `
+        <div class="checklist-item">
+          <div class="checklist-checkbox"></div>
+          <div class="checklist-text">${item.task}</div>
+          <span class="priority-badge priority-${item.priority}">${item.priority}</span>
+        </div>`).join('')}
+    </div>`).join('');
+
+  // Show results, hide form
+  document.getElementById('form-card').style.display = 'none';
+  document.getElementById('progress-container').style.display = 'none';
+  document.getElementById('results-page').classList.add('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Store for PDF
+  window._diagData = { d, leadsAtual, leadsEst, digitalScore, plan, setupVal, additionalRevenue, nivelDigital, infraLevel, potLeads, atendLabel, checklist, timeline };
+}
+
+/* ============================================================
+   PDF EXPORT
+   ============================================================ */
+function exportPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+  const D = window._diagData;
+  if (!D) return;
+
+  const { d, leadsAtual, leadsEst, digitalScore, plan, setupVal, nivelDigital, infraLevel, potLeads, atendLabel, checklist } = D;
+  const cfg = PLAN_CONFIG[plan];
+  const W = 210, margin = 18;
+  let y = 0;
+
+  // Helpers
+  const setFont = (size, style='normal', color=[15,23,42]) => {
+    doc.setFontSize(size);
+    doc.setFont('helvetica', style);
+    doc.setTextColor(...color);
+  };
+  const rect = (x, y, w, h, r, g, b) => {
+    doc.setFillColor(r, g, b);
+    doc.roundedRect(x, y, w, h, 3, 3, 'F');
+  };
+  const line = (x1,y1,x2,y2,r,g,b,lw=0.5) => {
+    doc.setDrawColor(r,g,b);
+    doc.setLineWidth(lw);
+    doc.line(x1,y1,x2,y2);
+  };
+  const addPage = () => { doc.addPage(); y = 20; };
+  const checkPage = (need=20) => { if (y + need > 270) addPage(); };
+
+  /* ---------- PAGE 1: COVER ---------- */
+  // Header band — dark with cyan accent
+  rect(0, 0, W, 52, 9, 10, 15);
+  doc.setDrawColor(0, 212, 255); doc.setLineWidth(1.5); doc.line(0, 52, W, 52);
+  setFont(9, 'bold', [0,212,255]); doc.text('RONALDIGITAL', margin, 14);
+  setFont(7, 'normal', [90,110,150]); doc.text('Sistema de Diagnóstico Inteligente — Uso Interno', margin, 20);
+  setFont(22, 'bold', [232,237,245]); doc.text('Proposta Comercial', margin, 36);
+  setFont(10, 'normal', [90,110,150]); doc.text('Diagnóstico Automatizado de Maturidade Digital', margin, 44);
+
+  // Client info box
+  y = 62;
+  rect(margin, y, W - margin*2, 44, 15, 17, 26);
+  doc.setDrawColor(0,212,255); doc.setLineWidth(.5); doc.roundedRect(margin, y, W-margin*2, 44, 3, 3, 'S');
+  setFont(8, 'bold', [0,212,255]); doc.text('CLIENTE', margin+6, y+8);
+  setFont(14, 'bold', [232,237,245]); doc.text(d.empresa.nome || '—', margin+6, y+18);
+  setFont(9, 'normal', [90,110,150]);
+  doc.text(`${d.empresa.cidade || ''}  •  ${d.empresa.vendedores || '?'} vendedores  •  ${d.empresa.estoque || '?'} veículos em estoque`, margin+6, y+26);
+  doc.text(`Ticket médio: ${d.empresa.ticket || '—'}  •  WhatsApp: ${d.empresa.whatsapp || '—'}`, margin+6, y+33);
+  doc.text(`Data do diagnóstico: ${formatDate()}`, margin+6, y+40);
+
+  // Score + plan summary
+  y += 54;
+  // Score box
+  rect(margin, y, 80, 38, 9, 10, 15);
+  doc.setDrawColor(0,212,255); doc.setLineWidth(.5); doc.roundedRect(margin, y, 80, 38, 3, 3, 'S');
+  setFont(8, 'bold', [0,212,255]); doc.text('SCORE DIGITAL', margin+6, y+9);
+  setFont(26, 'bold', [0,212,255]); doc.text(`${digitalScore}`, margin+6, y+26);
+  setFont(10, 'normal', [90,110,150]); doc.text('/ 100', margin+26, y+26);
+  setFont(8, 'normal', [90,110,150]); doc.text(`Nível: ${nivelDigital}`, margin+6, y+34);
+
+  // Plan box
+  const pc = [9, 10, 15];
+  rect(margin+84, y, W-margin*2-84, 38, ...pc);
+  doc.setDrawColor(0,212,255); doc.setLineWidth(.5); doc.roundedRect(margin+84, y, W-margin*2-84, 38, 3, 3, 'S');
+  setFont(8, 'bold', [0,212,255]); doc.text('PLANO RECOMENDADO', margin+90, y+9);
+  setFont(20, 'bold', [232,237,245]); doc.text(plan, margin+90, y+24);
+  setFont(10, 'normal', [90,110,150]); doc.text(`R$${cfg.price}/mês`, margin+90, y+33);
+
+  // KPIs row
+  y += 48;
+  const kpis = [
+    ['Infraestrutura', infraLevel],
+    ['Potencial de Leads', potLeads],
+    ['Atendimento', atendLabel],
+    ['Leads Estimados/mês', leadsEst],
+  ];
+  const colW = (W - margin*2) / 4;
+  kpis.forEach((k, i) => {
+    const x = margin + i * colW;
+    rect(x, y, colW-3, 22, 15, 17, 26);
+    doc.setDrawColor(30, 35, 53); doc.setLineWidth(.3); doc.roundedRect(x, y, colW-3, 22, 2, 2, 'S');
+    setFont(7, 'bold', [0,212,255]); doc.text(k[0].toUpperCase(), x+3, y+7);
+    setFont(11, 'bold', [232,237,245]); doc.text(String(k[1]), x+3, y+17);
+  });
+
+  // Setup estimate
+  y += 32;
+  rect(margin, y, W-margin*2, 22, 9, 10, 15);
+  doc.setDrawColor(0,212,255); doc.setLineWidth(.5); doc.roundedRect(margin, y, W-margin*2, 22, 3, 3, 'S');
+  setFont(8, 'bold', [0,212,255]); doc.text('INVESTIMENTO ESTIMADO', margin+6, y+8);
+  setFont(10, 'normal', [180,190,210]);
+  doc.text(`Ativação: R$${fmtMoney(setupVal)}   |   Mensalidade: R$${fmtMoney(cfg.price)}/mês   |   Contrato mín.: ${contractMonths} meses   |   Receita garantida: R$${fmtMoney(receitaGarantida)}`, margin+6, y+17);
+
+  /* ---------- PAGE 2: DIAGNOSIS ---------- */
+  addPage();
+  rect(0, 0, W, 14, 9, 10, 15);
+  doc.setDrawColor(0,212,255); doc.setLineWidth(1); doc.line(0, 14, W, 14);
+  setFont(9, 'bold', [0,212,255]); doc.text('DIAGNÓSTICO DETALHADO', margin, 9);
+  y = 22;
+
+  // Diagnosis table
+  const diagRows = [
+    ['Nível Digital', nivelDigital],
+    ['Infraestrutura Existente', infraLevel],
+    ['Potencial de Leads', potLeads],
+    ['Velocidade de Atendimento', atendLabel],
+    ['Anúncios Pagos', fmtAnuncios(d.marketing.anuncios)],
+    ['Leads Atuais/mês (aprox.)', String(leadsAtual)],
+    ['CRM', d.tech.crm ? `Sim — ${d.tech.crmNome || 'não especificado'}` : 'Não possui'],
+    ['WhatsApp Business API', d.tech.wppapi ? 'Configurado' : 'Não possui'],
+    ['Automação de Marketing', d.tech.automacao ? 'Ativa' : 'Não possui'],
+    ['Instagram', d.presenca.instagram ? '✓ Possui' : '✗ Não possui'],
+    ['Facebook', d.presenca.facebook ? '✓ Possui' : '✗ Não possui'],
+    ['Google Meu Negócio', d.presenca.google ? '✓ Possui' : '✗ Não possui'],
+    ['Site Próprio', d.presenca.site ? `✓ Possui (${fmtSite(d.presenca.tipoSite)})` : '✗ Não possui'],
+    ['Domínio Próprio', d.presenca.dominio ? '✓ Possui' : '✗ Não possui'],
+    ['Email Corporativo', d.presenca.email ? '✓ Possui' : '✗ Não possui'],
+  ];
+
+  diagRows.forEach((row, i) => {
+    checkPage(9);
+    if (i % 2 === 0) rect(margin, y-1, W-margin*2, 9, 15, 17, 26);
+    setFont(8, 'bold', [90,110,150]); doc.text(row[0], margin+4, y+5);
+    setFont(8, 'normal', [210,220,235]); doc.text(row[1], margin+90, y+5);
+    y += 9;
+  });
+
+  // Observations
+  if (d.obs) {
+    y += 8;
+    checkPage(30);
+    setFont(9, 'bold', [0,212,255]); doc.text('OBSERVAÇÕES DO CONSULTOR', margin, y);
+    y += 6;
+    rect(margin, y, W-margin*2, 30, 15, 17, 26);
+    setFont(8, 'normal', [180,190,210]);
+    const obsLines = doc.splitTextToSize(d.obs, W-margin*2-10);
+    doc.text(obsLines.slice(0,8), margin+5, y+7);
+    y += 32;
+  }
+
+  /* ---------- PAGE 3: PLAN + INVESTMENT ---------- */
+  addPage();
+  rect(0, 0, W, 14, 9, 10, 15);
+  doc.setDrawColor(0,212,255); doc.setLineWidth(1); doc.line(0, 14, W, 14);
+  setFont(9, 'bold', [0,212,255]); doc.text('PLANO RECOMENDADO & INVESTIMENTO', margin, 9);
+  y = 22;
+
+  // Plan detail
+  setFont(14, 'bold', [0,212,255]); doc.text(`Plano ${plan}`, margin, y); y += 8;
+  setFont(9, 'normal', [90,110,150]); doc.text('O plano ideal para o perfil e maturidade digital identificados neste diagnóstico.', margin, y); y += 10;
+
+  cfg.features.forEach(f => {
+    checkPage(8);
+    setFont(9, 'normal', f.active ? [210,220,235] : [60,80,110]);
+    doc.text(`${f.active ? '✓' : '✗'}  ${f.text}`, margin+4, y);
+    y += 8;
+  });
+
+  y += 6;
+  checkPage(35);
+  setFont(10, 'bold', [0,212,255]); doc.text('Resumo de Investimento', margin, y); y += 8;
+
+  const invRows = [
+    ['Taxa de ativação (única, inclui todo o setup)', `R$${fmtMoney(setupVal)}`],
+    ['Mensalidade — tudo incluído, sem surpresas', `R$${fmtMoney(cfg.price)}/mês`],
+    ['Contrato mínimo', `${contractMonths} meses`],
+    ['Receita garantida pelo contrato (ativação + mensalidades)', `R$${fmtMoney(receitaGarantida)}`],
+    ['Leads estimados após implementação', `${leadsEst} leads/mês (+${Math.round((cfg.leads_mult-1)*100)}%)`],
+  ];
+  invRows.forEach((row, i) => {
+    checkPage(9);
+    if (i % 2 === 0) rect(margin, y-1, W-margin*2, 9, 15, 17, 26);
+    setFont(8, 'bold', [90,110,150]); doc.text(row[0], margin+4, y+5);
+    setFont(8, 'bold', [0,212,255]); doc.text(row[1], margin+130, y+5, { align:'right' });
+    y += 9;
+  });
+
+  /* ---------- PAGE 4: CHECKLIST ---------- */
+  addPage();
+  rect(0, 0, W, 14, 9, 10, 15);
+  doc.setDrawColor(0,212,255); doc.setLineWidth(1); doc.line(0, 14, W, 14);
+  setFont(9, 'bold', [0,212,255]); doc.text('CHECKLIST DE IMPLEMENTAÇÃO', margin, 9);
+  y = 22;
+
+  const grouped2 = {};
+  checklist.forEach(item => {
+    if (!grouped2[item.category]) grouped2[item.category] = [];
+    grouped2[item.category].push(item);
+  });
+
+  const priorityColors = { alta:[239,68,68], media:[245,158,11], baixa:[37,99,235] };
+
+  Object.entries(grouped2).forEach(([cat, items]) => {
+    checkPage(20);
+    setFont(9, 'bold', [0,212,255]); doc.text(cat.toUpperCase(), margin, y); y += 2;
+    line(margin, y, W-margin, y, 0, 212, 255, .3); y += 5;
+
+    items.forEach(item => {
+      checkPage(9);
+      rect(margin, y-1, W-margin*2, 8, 15, 17, 26);
+      // Priority dot
+      doc.setFillColor(...(priorityColors[item.priority] || [90,110,150]));
+      doc.circle(margin+5, y+3, 2, 'F');
+      setFont(8, 'normal', [210,220,235]);
+      doc.text(`☐  ${item.task}`, margin+10, y+5);
+      setFont(7, 'bold', ...[priorityColors[item.priority] || [90,110,150]]);
+      doc.text(item.priority.toUpperCase(), W-margin-3, y+5, { align:'right' });
+      y += 9;
+    });
+    y += 4;
+  });
+
+  // Footer on all pages
+  const totalPages = doc.getNumberOfPages();
+  for (let i = 1; i <= totalPages; i++) {
+    doc.setPage(i);
+    rect(0, 284, W, 10, 9, 10, 15);
+    doc.setDrawColor(0,212,255); doc.setLineWidth(.3); doc.line(0, 284, W, 284);
+    setFont(7, 'normal', [0,212,255]);
+    doc.text(`RonalDigital — Diagnóstico Inteligente  |  Página ${i} de ${totalPages}  |  ${formatDate()}`, W/2, 290, { align:'center' });
+  }
+
+  const filename = `RonalDigital_Proposta_${(d.empresa.nome||'Cliente').replace(/\s+/g,'-')}_${new Date().toISOString().slice(0,10)}.pdf`;
+  doc.save(filename);
+  showToast('PDF exportado com sucesso!', 'success');
+}
+
+function printProposal() {
+  window.print();
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+function setText(id, text) { const el = document.getElementById(id); if (el) el.textContent = text; }
+function setLevelBadge(id, text, cls) {
+  const el = document.getElementById(id);
+  if (el) { el.textContent = text; el.className = `badge ${cls}`; }
+}
+function fmtMoney(n) { return Number(n).toLocaleString('pt-BR'); }
+function formatDate() {
+  return new Date().toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
+}
+function fmtAnuncios(v) {
+  const map = { 'nao':'Não roda anúncios', 'instagram':'Instagram Ads', 'facebook':'Facebook Ads',
+                'google':'Google Ads', 'multiplas':'Múltiplas plataformas' };
+  return map[v] || '—';
+}
+function fmtSite(v) {
+  const map = { 'institucional':'Institucional', 'catalogo':'Com catálogo', 'formularios':'Com formulários', 'leads':'Com sistema de leads' };
+  return map[v] || '—';
+}
+
+function showToast(msg, type='') {
+  const existing = document.querySelector('.toast');
+  if (existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i> ${msg}`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3500);
+}
+
+function restartForm() {
+  if (!confirm('Iniciar um novo diagnóstico? Os dados atuais serão perdidos.')) return;
+  location.reload();
+}
+
+/* ============================================================
+   AUTOSAVE (localStorage)
+   ============================================================ */
+function autosave() {
+  try {
+    const fields = ['f-nome','f-cidade','f-estoque','f-ticket','f-vendedores','f-telefone','f-whatsapp','t-crm-nome','f-obs'];
+    const data = {};
+    fields.forEach(id => { const el = document.getElementById(id); if (el) data[id] = el.value; });
+    localStorage.setItem('rd_diag_draft', JSON.stringify(data));
+  } catch(e) {}
+}
+
+function loadDraft() {
+  try {
+    const raw = localStorage.getItem('rd_diag_draft');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    Object.entries(data).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (el) el.value = val;
+    });
+  } catch(e) {}
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+  loadDraft();
+  document.querySelectorAll('.field-input').forEach(el => {
+    el.addEventListener('input', autosave);
+    el.addEventListener('blur', () => { el.classList.remove('error'); });
+  });
+
+  // Phone mask
+  ['f-telefone','f-whatsapp'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', function() {
+      let v = this.value.replace(/\D/g,'');
+      if (v.length <= 10) v = v.replace(/(\d{2})(\d{4})(\d{0,4})/,'($1) $2-$3');
+      else v = v.replace(/(\d{2})(\d{5})(\d{0,4})/,'($1) $2-$3');
+      this.value = v;
+    });
+  });
+});
+</script>
+</body>
+</html>
