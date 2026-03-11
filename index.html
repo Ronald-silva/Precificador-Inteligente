@@ -1728,10 +1728,12 @@ const TOTAL_STEPS = 5;
 
 const PLAN_CONFIG = {
   Starter: {
-    price:    797,
-    setup:    1500,
-    contract: 3,      // meses mínimo
-    leads_mult: 1.5,
+    price:        797,
+    setup:        1500,
+    contract:     3,      // meses mínimo
+    leads_mult:   1.5,
+    msg_limit:    600,    // mensagens WhatsApp/mês incluídas
+    msg_extra:    1.20,   // R$ por mensagem excedente
     features: [
       { text: 'Landing page de captação', active: true },
       { text: 'WhatsApp Business configurado', active: true },
@@ -1743,10 +1745,12 @@ const PLAN_CONFIG = {
     ]
   },
   Growth: {
-    price:    1297,
-    setup:    2500,
-    contract: 3,
-    leads_mult: 2.0,
+    price:        1297,
+    setup:        2500,
+    contract:     3,
+    leads_mult:   2.0,
+    msg_limit:    1200,
+    msg_extra:    0.99,
     features: [
       { text: 'Landing page de captação', active: true },
       { text: 'WhatsApp Business API', active: true },
@@ -1758,10 +1762,12 @@ const PLAN_CONFIG = {
     ]
   },
   Pro: {
-    price:    1997,
-    setup:    3500,
-    contract: 6,
-    leads_mult: 3.0,
+    price:        1997,
+    setup:        3500,
+    contract:     6,
+    leads_mult:   3.0,
+    msg_limit:    2500,
+    msg_extra:    0.79,
     features: [
       { text: 'Landing page de captação', active: true },
       { text: 'WhatsApp Business API', active: true },
@@ -2173,9 +2179,16 @@ function generateResults() {
         ${isRec ? `<div class="plan-rec-badge">✓ Recomendado</div>` : ''}
         <div class="plan-name">${p}</div>
         <div class="plan-price">R$${fmtMoney(c.price)}<span>/mês</span></div>
-        <div style="font-size:11px;color:var(--text-muted);margin-top:4px;margin-bottom:12px">
+        <div style="font-size:11px;color:var(--text-muted);margin-top:4px;margin-bottom:8px">
           Ativação: <strong style="color:var(--text-mid)">R$${fmtMoney(c.setup)}</strong>
           &nbsp;·&nbsp; Contrato mín.: <strong style="color:var(--text-mid)">${c.contract} meses</strong>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.15);border-radius:7px;padding:7px 10px;margin-bottom:12px">
+          <i class="fas fa-comment-dots" style="color:var(--cyan);font-size:11px;flex-shrink:0"></i>
+          <span style="font-size:11px;color:var(--text-mid)">
+            <strong style="color:var(--text)">${c.msg_limit.toLocaleString('pt-BR')}</strong> msgs/mês incluídas
+            &nbsp;·&nbsp; excedente <strong style="color:var(--text)">R$${c.msg_extra.toFixed(2).replace('.',',')}</strong>/msg
+          </span>
         </div>
         <div class="plan-features">
           ${c.features.map(f => `

@@ -320,6 +320,77 @@
       .tab-link i { display: none; }
     }
 
+    /* ===== RESPONSIVIDADE MOBILE ===== */
+    @media (max-width: 768px) {
+      /* Top bar */
+      .topbar { padding: 10px 16px; }
+      .brand-sub { display: none; }
+      .badge-internal { display: none; }
+      .btn-pdf { padding: 8px 14px; font-size: 12px; }
+      .btn-pdf .btn-label { display: none; }
+
+      /* Tab nav */
+      .tab-nav { padding: 0 12px; }
+      .tab-link { padding: 10px 12px; font-size: 12px; gap: 6px; }
+      .tab-link i { display: none; }
+
+      /* Main */
+      .main { padding: 20px 14px 60px; }
+
+      /* Hero */
+      .hero { padding: 24px 20px; margin-bottom: 20px; }
+      .hero::before { width: 140px; height: 140px; top: -40px; right: -40px; }
+      .hero-title { font-size: 20px; letter-spacing: -.3px; }
+      .hero-desc { font-size: 13px; max-width: 100%; }
+      .hero-pills { gap: 6px; margin-top: 14px; }
+      .pill { font-size: 11px; padding: 4px 10px; }
+
+      /* Plans overview — 1 coluna */
+      .plans-overview { grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
+      .plan-ov { padding: 16px; }
+      .plan-ov-price { font-size: 18px; }
+      .plan-ov-setup { margin-bottom: 10px; }
+
+      /* Section */
+      .section { margin-bottom: 28px; }
+      .section-title { font-size: 10px; margin-bottom: 12px; }
+
+      /* Feature block */
+      .feature-header { padding: 14px 16px 12px; gap: 10px; }
+      .feature-icon { width: 34px; height: 34px; font-size: 14px; }
+      .feature-name { font-size: 13.5px; }
+      .feature-body { padding: 14px 16px; }
+      .feature-what { font-size: 13px; }
+
+      /* Info rows */
+      .info-row { font-size: 12.5px; padding: 9px 11px; }
+
+      /* Tabelas com scroll horizontal */
+      .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .comp-table { font-size: 12px; min-width: 380px; }
+      .comp-table th { padding: 8px 10px; font-size: 10px; }
+      .comp-table td { padding: 7px 10px; }
+
+      /* Diff row — 1 coluna */
+      .diff-row { grid-template-columns: 1fr; gap: 8px; }
+      .diff-item { font-size: 12px; padding: 10px 12px; }
+
+      /* Objections */
+      .obj-q { font-size: 13px; padding: 12px 14px; }
+      .obj-a { font-size: 12.5px; padding: 12px 14px; }
+
+      /* Footer */
+      footer { padding: 20px 16px; font-size: 11px; }
+    }
+
+    @media (max-width: 400px) {
+      .hero-title { font-size: 18px; }
+      .plan-ov-price { font-size: 16px; }
+      .topbar { padding: 8px 12px; }
+      .brand-name { font-size: 13px; }
+      .brand-logo { width: 32px; height: 32px; }
+    }
+
     /* ===== PRINT STYLES ===== */
     @media print {
       @page { margin: 16mm 18mm; size: A4; }
@@ -372,7 +443,7 @@
   <div class="topbar-right">
     <span class="badge-internal">🔒 Restrito aos sócios</span>
     <button class="btn-pdf" onclick="window.print()">
-      ⬇ Exportar PDF
+      ⬇ <span class="btn-label">Exportar PDF</span>
     </button>
   </div>
 </div>
@@ -581,6 +652,7 @@
           coluna: <strong>Novo → Contato feito → Visita agendada → Proposta → Fechado.</strong>
           Cada movimento fica registrado com data e responsável.
         </div>
+        <div class="table-wrap">
         <table class="comp-table">
           <thead>
             <tr><th>Funcionalidade</th><th>CRM Básico</th><th>CRM Completo</th></tr>
@@ -594,6 +666,7 @@
             <tr><td>Relatórios de conversão</td><td class="no">—</td><td class="yes">✓</td></tr>
           </tbody>
         </table>
+        </div>
         <div class="info-row pitch" style="margin-top:12px">
           <span class="info-row-icon">💬</span>
           <div class="info-row-text"><strong>Argumento de venda:</strong> "Hoje vocês sabem quantos leads entraram no mês passado? Quantos viraram visita? Com o CRM completo, o gerente vê isso em tempo real sem perguntar pra ninguém."</div>
@@ -675,6 +748,7 @@
           Follow-up não só pelo WhatsApp, mas coordenado em múltiplos canais
           de forma simultânea. Também inclui lead scoring.
         </div>
+        <div class="table-wrap">
         <table class="comp-table">
           <thead>
             <tr><th>Canal / Funcionalidade</th><th>Growth</th><th>Pro</th></tr>
@@ -687,6 +761,7 @@
             <tr><td>Chatbot de qualificação</td><td class="no">—</td><td class="yes">✓</td></tr>
           </tbody>
         </table>
+        </div>
         <div class="info-row tip" style="margin-top:12px">
           <span class="info-row-icon">💡</span>
           <div class="info-row-text"><strong>Lead scoring:</strong> O sistema pontua os leads por comportamento — abriu a mensagem, visitou a landing page novamente, clicou no link do veículo. Os leads mais pontuados sobem para o topo da fila do vendedor automaticamente.</div>
