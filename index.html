@@ -683,7 +683,7 @@
     /* Plans */
     .plans-row {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 14px;
     }
     .plan-card {
@@ -1067,7 +1067,7 @@
     </div>
   </div>
   <div style="display:flex;align-items:center;gap:10px">
-    <span class="internal-notice"><i class="fas fa-lock" style="margin-right:4px;font-size:9px"></i>Restrito aos sócios</span>
+    <span class="internal-notice"><i class="fas fa-lock" style="margin-right:4px;font-size:9px"></i>Uso interno</span>
     <div class="header-badge">
       <i class="fas fa-chart-network"></i>
       Ferramenta Interna
@@ -1715,7 +1715,7 @@
 </main>
 
 <footer class="app-footer">
-  <span style="color:var(--text-mid)">Ronal<span style="color:var(--cyan)">Digital</span></span> &copy; <span id="footer-year"></span> &nbsp;&mdash;&nbsp; Ferramenta interna de diagnóstico &nbsp;&mdash;&nbsp; <span style="color:var(--danger);font-weight:700">Uso restrito aos sócios</span>
+  <span style="color:var(--text-mid)">Ronal<span style="color:var(--cyan)">Digital</span></span> &copy; <span id="footer-year"></span> &nbsp;&mdash;&nbsp; Ferramenta interna de diagnóstico &nbsp;&mdash;&nbsp; <span style="color:var(--danger);font-weight:700">Uso interno RonalDigital</span>
 </footer>
 
 <!-- ==================== JAVASCRIPT ==================== -->
@@ -1728,54 +1728,39 @@ const TOTAL_STEPS = 5;
 
 const PLAN_CONFIG = {
   Starter: {
-    price:        797,
+    price:        597,
     setup:        1500,
-    contract:     3,      // meses mínimo
+    contract:     3,
     leads_mult:   1.5,
-    msg_limit:    600,    // mensagens WhatsApp/mês incluídas
-    msg_extra:    1.20,   // R$ por mensagem excedente
+    msg_limit:    600,
+    msg_extra:    1.20,
     features: [
-      { text: 'Landing page de captação', active: true },
-      { text: 'WhatsApp Business configurado', active: true },
-      { text: 'CRM básico de leads', active: true },
-      { text: 'Automação de follow-up (D+1, D+3)', active: true },
-      { text: 'Relatório mensal de leads', active: true },
+      { text: 'Número WhatsApp configurado (Twilio)', active: true },
+      { text: 'Agente de IA com nome escolhido pelo cliente', active: true },
+      { text: 'CRM básico — leads e agendamentos', active: true },
+      { text: 'Follow-up automático D+1 e D+3', active: true },
+      { text: 'Relatório mensal', active: true },
+      { text: 'Painel exclusivo via link', active: true },
+      { text: 'WhatsApp Business API oficial', active: false },
+      { text: 'Follow-up D+7', active: false },
       { text: 'Integração multi-canal', active: false },
-      { text: 'Gestor de tráfego dedicado', active: false },
     ]
   },
   Growth: {
-    price:        1297,
+    price:        997,
     setup:        2500,
     contract:     3,
     leads_mult:   2.0,
     msg_limit:    1200,
     msg_extra:    0.99,
     features: [
-      { text: 'Landing page de captação', active: true },
-      { text: 'WhatsApp Business API', active: true },
-      { text: 'CRM completo + pipeline', active: true },
-      { text: 'Automação de follow-up (D+1, D+3, D+7)', active: true },
-      { text: 'Relatório semanal de leads', active: true },
+      { text: 'Número WhatsApp configurado (Twilio)', active: true },
+      { text: 'Agente de IA com nome escolhido pelo cliente', active: true },
+      { text: 'CRM completo + pipeline Kanban', active: true },
+      { text: 'WhatsApp Business API oficial', active: true },
+      { text: 'Follow-up automático D+1, D+3 e D+7', active: true },
       { text: 'Integração multi-canal', active: true },
-      { text: 'Gestor de tráfego dedicado', active: false },
-    ]
-  },
-  Pro: {
-    price:        1997,
-    setup:        3500,
-    contract:     6,
-    leads_mult:   3.0,
-    msg_limit:    2500,
-    msg_extra:    0.79,
-    features: [
-      { text: 'Landing page de captação', active: true },
-      { text: 'WhatsApp Business API', active: true },
-      { text: 'CRM completo + pipeline', active: true },
-      { text: 'Automação avançada multi-canal', active: true },
-      { text: 'Relatório diário de leads', active: true },
-      { text: 'Integração multi-canal', active: true },
-      { text: 'Gestor de tráfego dedicado', active: true },
+      { text: 'Relatório semanal', active: true },
     ]
   }
 };
@@ -1995,8 +1980,7 @@ function calcAtendScore(d) {
 }
 
 function recommendPlan(d, leadsAtual, digitalScore) {
-  if (leadsAtual >= 60 || digitalScore >= 65 || d.marketing.anuncios === 'multiplas') return 'Pro';
-  if (leadsAtual >= 30 || (d.marketing.anuncios !== 'nao' && leadsAtual >= 10)) return 'Growth';
+  if (leadsAtual >= 20 || digitalScore >= 35 || d.tech.crm || d.tech.wppapi) return 'Growth';
   return 'Starter';
 }
 
@@ -2049,7 +2033,6 @@ function generateChecklist(d, plan) {
   // Onboarding
   add('Onboarding', 'Treinamento da equipe de vendas no uso do CRM', 'media');
   add('Onboarding', 'Definir SLA de atendimento de leads (tempo de resposta)', 'alta');
-  if (plan === 'Pro') add('Onboarding', 'Configurar dashboard de KPIs em tempo real', 'media');
 
   return items;
 }
@@ -2098,12 +2081,6 @@ function generateTimeline(plan) {
       { phase: 'Semana 2', title: 'Automação & Campanhas', desc: 'WhatsApp API, chatbot, sequência de follow-up e campanha inicial Meta Ads.', color: '#00bbdd' },
       { phase: 'Semana 3', title: 'Integração Multi-canal', desc: 'Conexão de Instagram, Facebook e Google com o CRM. Remarketing ativo.', color: '#00a0c0' },
       { phase: 'Semana 4+', title: 'Otimização Contínua', desc: 'Análise semanal de KPIs, otimização de criativos e funil de vendas.', color: '#0088aa' },
-    ],
-    Pro: [
-      { phase: 'Semana 1-2', title: 'Infraestrutura Enterprise', desc: 'WhatsApp Business API, CRM completo, dashboard de KPIs e todas as integrações.', color: '#00d4ff' },
-      { phase: 'Semana 2-3', title: 'Automação Avançada', desc: 'Chatbot com IA, sequências multi-canal, lead scoring e qualificação automática.', color: '#00bbdd' },
-      { phase: 'Semana 3-4', title: 'Campanhas & Tráfego', desc: 'Gestor dedicado: Meta Ads, Google Ads, remarketing dinâmico com catálogo de veículos.', color: '#00a0c0' },
-      { phase: 'Mês 2+', title: 'Escala & Performance', desc: 'Relatórios diários, A/B de criativos, expansão de campanhas e gestão proativa.', color: '#007799' },
     ],
   };
   return base[plan] || base['Starter'];
@@ -2171,7 +2148,7 @@ function generateResults() {
   ).join('');
 
   // Plans
-  document.getElementById('r-plans').innerHTML = ['Starter','Growth','Pro'].map(p => {
+  document.getElementById('r-plans').innerHTML = ['Starter','Growth'].map(p => {
     const c = PLAN_CONFIG[p];
     const isRec = p === plan;
     return `

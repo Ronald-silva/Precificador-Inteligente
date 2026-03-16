@@ -129,7 +129,7 @@
 
     /* PLAN OVERVIEW */
     .plans-overview {
-      display: grid; grid-template-columns: repeat(3,1fr);
+      display: grid; grid-template-columns: repeat(2,1fr);
       gap: 14px; margin-bottom: 32px;
     }
     .plan-ov {
@@ -438,7 +438,7 @@
       .comp-table th { background: #f0f4f8 !important; color: #0077aa !important; }
       .comp-table tr:nth-child(even) td { background: #f8fafc !important; }
       .badge-internal { background: #fef2f2 !important; color: #dc2626 !important; border-color: #fecaca !important; }
-      .plans-overview { grid-template-columns: repeat(3,1fr); }
+      .plans-overview { grid-template-columns: repeat(2,1fr); }
     }
   </style>
 </head>
@@ -454,7 +454,7 @@
     </div>
   </div>
   <div class="topbar-right">
-    <span class="badge-internal">🔒 Restrito aos sócios</span>
+    <span class="badge-internal">🔒 Uso interno RonalDigital</span>
     <button class="btn-pdf" onclick="window.print()">
       ⬇ <span class="btn-label">Exportar PDF</span>
     </button>
@@ -474,460 +474,144 @@
 
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-eyebrow">Guia Interno de Vendas — Automação de Leads para Concessionárias</div>
-    <h1 class="hero-title">O que você entrega<br><span>e como explicar ao cliente</span></h1>
-    <p class="hero-desc">
-      Este documento explica cada funcionalidade dos planos RonalDigital em linguagem simples —
-      o que é, por que o lojista precisa e como argumentar quando ele perguntar ou objetar.
-    </p>
-    <div class="hero-pills">
-      <span class="pill">📋 Uso interno</span>
-      <span class="pill">🚗 Concessionárias</span>
-      <span class="pill">💬 Argumentos de venda</span>
-      <span class="pill">⚠️ Limitações honestas</span>
-    </div>
+    <div class="hero-eyebrow">Guia Interno de Vendas · RonalDigital</div>
+    <h1 class="hero-title">O produto, os planos<br><span>e como vender.</span></h1>
+    <p class="hero-desc">Referência rápida para a conversa com o cliente — o que entregamos, quanto custa e como responder as dúvidas mais comuns.</p>
   </div>
 
-  <!-- PLAN OVERVIEW -->
+  <!-- PLANOS -->
   <div class="section">
-    <div class="section-title">Visão geral dos planos</div>
+    <div class="section-title">Os dois planos</div>
     <div class="plans-overview">
       <div class="plan-ov">
         <div class="plan-ov-name">STARTER</div>
-        <div class="plan-ov-price">R$797<small>/mês</small></div>
-        <div class="plan-ov-setup">Ativação R$1.500 · Contrato 3 meses</div>
-        <div class="plan-ov-for">Para loja sem nada digital ainda — ou que usa só o WhatsApp pessoal.</div>
-        <div class="plan-ov-pitch">"Do zero ao digital organizado em 2 semanas."</div>
+        <div class="plan-ov-price">R$597<small>/mês</small></div>
+        <div class="plan-ov-setup">Ativação R$1.500 · 3 meses · Receita mín. R$3.291</div>
+        <div class="plan-ov-for">Para quem não tem nenhuma automação hoje. Agente no ar em até 7 dias.</div>
+        <div class="plan-ov-pitch">"Do zero à automação em uma semana."</div>
       </div>
       <div class="plan-ov rec">
         <div class="plan-ov-name">GROWTH ⭐ mais vendido</div>
-        <div class="plan-ov-price">R$1.297<small>/mês</small></div>
-        <div class="plan-ov-setup">Ativação R$2.500 · Contrato 3 meses</div>
-        <div class="plan-ov-for">Para loja que já tenta gerar leads mas perde no atendimento e no follow-up.</div>
+        <div class="plan-ov-price">R$997<small>/mês</small></div>
+        <div class="plan-ov-setup">Ativação R$2.500 · 3 meses · Receita mín. R$5.491</div>
+        <div class="plan-ov-for">Para quem já gera leads mas perde no atendimento e no follow-up.</div>
         <div class="plan-ov-pitch">"Você já gera leads — a gente para de jogar fora."</div>
       </div>
-      <div class="plan-ov">
-        <div class="plan-ov-name">PRO</div>
-        <div class="plan-ov-price">R$1.997<small>/mês</small></div>
-        <div class="plan-ov-setup">Ativação R$3.500 · Contrato 6 meses</div>
-        <div class="plan-ov-for">Para loja que quer escalar volume e terceirizar o digital completamente.</div>
-        <div class="plan-ov-pitch">"Terceiriza o digital, foca em vender."</div>
-      </div>
     </div>
   </div>
 
-  <!-- ===== FEATURES ===== -->
+  <!-- COMPARATIVO -->
   <div class="section">
-    <div class="section-title">Explicação de cada funcionalidade</div>
-
-    <!-- 1. Landing page -->
+    <div class="section-title">O que cada plano inclui</div>
     <div class="feature-block">
-      <div class="feature-header">
-        <div class="feature-icon">🎯</div>
-        <div>
-          <div class="feature-name">Landing Page de Captação</div>
-          <div class="feature-plans">
-            <span class="plan-tag tag-starter">Starter</span>
-            <span class="plan-tag tag-growth">Growth</span>
-            <span class="plan-tag tag-pro">Pro</span>
-          </div>
-        </div>
-      </div>
-      <div class="feature-body">
-        <div class="feature-what">
-          Uma página web criada por você, focada 100% em capturar o contato do interessado.
-          Diferente do site institucional, ela tem um único objetivo: o visitante preencher
-          nome, telefone e qual veículo procura. Quando isso acontece, o lead entra
-          automaticamente no CRM.
-        </div>
-        <div class="info-row pitch">
-          <span class="info-row-icon">💬</span>
-          <div class="info-row-text"><strong>Argumento de venda:</strong> "Hoje quando você faz um anúncio, onde a pessoa cai? No seu perfil do Instagram. Com a landing page, ela cai numa página que captura o contato dela e joga no sistema antes de você falar com ela."</div>
-        </div>
-        <div class="info-row tip">
-          <span class="info-row-icon">💡</span>
-          <div class="info-row-text"><strong>Por que é diferente do site da loja:</strong> O site tem muita informação e distrai. A landing page tem só uma oferta e um botão. A taxa de conversão é 3 a 5x maior.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 2. WhatsApp Business comum -->
-    <div class="feature-block">
-      <div class="feature-header">
-        <div class="feature-icon">📱</div>
-        <div>
-          <div class="feature-name">WhatsApp Business Configurado</div>
-          <div class="feature-plans">
-            <span class="plan-tag tag-starter">Starter</span>
-          </div>
-        </div>
-      </div>
-      <div class="feature-body">
-        <div class="feature-what">
-          Configuração do WhatsApp Business gratuito: catálogo de veículos, mensagem
-          automática de ausência, etiquetas de atendimento (Novo Lead, Em Negociação,
-          Fechado), horário de funcionamento e perfil completo da empresa.
-        </div>
-        <div class="info-row warning">
-          <span class="info-row-icon">⚠️</span>
-          <div class="info-row-text"><strong>Limitação importante de conhecer:</strong> Esta é a versão gratuita, sem API. Disparos automáticos de follow-up (D+1, D+3) não são nativos — dependem de ação manual ou ferramentas de terceiros. Isso é a principal razão para migrar para Growth.</div>
-        </div>
-        <div class="info-row note">
-          <span class="info-row-icon">📌</span>
-          <div class="info-row-text">O Starter serve bem para loja que ainda não tem nenhuma organização digital. A meta é organizar o básico e vender o upgrade em 60 dias.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. WhatsApp Business API -->
-    <div class="feature-block">
-      <div class="feature-header">
-        <div class="feature-icon">⚡</div>
-        <div>
-          <div class="feature-name">WhatsApp Business API</div>
-          <div class="feature-plans">
-            <span class="plan-tag tag-growth">Growth</span>
-            <span class="plan-tag tag-pro">Pro</span>
-          </div>
-        </div>
-      </div>
-      <div class="feature-body">
-        <div class="feature-what">
-          A versão oficial da Meta para empresas que precisam de automação real.
-          Conecta o número da loja a uma plataforma (ex: Twilio, 360dialog) que permite
-          enviar mensagens automáticas sem nenhuma intervenção humana.
-        </div>
-        <div class="diff-row">
-          <div class="diff-item bad">
-            <div class="diff-label">❌ Sem API (Starter)</div>
-            <p>Follow-up manual, 1 celular por vez, sem chatbot, sem múltiplos atendentes simultâneos.</p>
-          </div>
-          <div class="diff-item good">
-            <div class="diff-label">✅ Com API (Growth / Pro)</div>
-            <p>Follow-up automático, vários atendentes no mesmo número, chatbot, disparo programado.</p>
-          </div>
-        </div>
-        <div class="info-row pitch" style="margin-top:12px">
-          <span class="info-row-icon">💬</span>
-          <div class="info-row-text"><strong>Argumento de venda:</strong> "Com a API, quando um lead entra às 23h num domingo, ele recebe uma mensagem automática em menos de 1 minuto dizendo que você vai falar com ele de manhã. Nenhum concorrente faz isso."</div>
-        </div>
-        <div class="info-row warning">
-          <span class="info-row-icon">⚠️</span>
-          <div class="info-row-text"><strong>Custo que você precisa saber:</strong> A Meta cobra por conversa iniciada pela empresa (~R$0,25–0,40 cada). Esse custo está embutido na sua margem — não é repassado ao cliente como variável, mas precisa ser controlado.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4. CRM básico -->
-    <div class="feature-block">
-      <div class="feature-header">
-        <div class="feature-icon">📋</div>
-        <div>
-          <div class="feature-name">CRM Básico de Leads</div>
-          <div class="feature-plans">
-            <span class="plan-tag tag-starter">Starter</span>
-          </div>
-        </div>
-      </div>
-      <div class="feature-body">
-        <div class="feature-what">
-          Sistema simples para registrar e acompanhar os leads: nome, telefone, veículo
-          de interesse e status (Novo / Em contato / Proposta feita / Fechado / Perdido).
-          Substitui a planilha do Excel e os post-its. Cada lead que entra pela landing
-          page aparece automaticamente na lista.
-        </div>
-        <div class="info-row pitch">
-          <span class="info-row-icon">💬</span>
-          <div class="info-row-text"><strong>Argumento de venda:</strong> "Hoje se um vendedor sai da loja, o que acontece com os clientes que ele estava atendendo? Com o CRM, ficam registrados e qualquer um da equipe continua de onde parou."</div>
-        </div>
-        <div class="info-row note">
-          <span class="info-row-icon">📌</span>
-          <div class="info-row-text">Sem pipeline visual avançado, sem automações de sequência, sem relatórios detalhados. Para isso, o cliente precisa do Growth.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 5. CRM completo -->
-    <div class="feature-block">
-      <div class="feature-header">
-        <div class="feature-icon">🗂️</div>
-        <div>
-          <div class="feature-name">CRM Completo + Pipeline</div>
-          <div class="feature-plans">
-            <span class="plan-tag tag-growth">Growth</span>
-            <span class="plan-tag tag-pro">Pro</span>
-          </div>
-        </div>
-      </div>
-      <div class="feature-body">
-        <div class="feature-what">
-          CRM com funil visual estilo Kanban onde você arrasta o lead de coluna em
-          coluna: <strong>Novo → Contato feito → Visita agendada → Proposta → Fechado.</strong>
-          Cada movimento fica registrado com data e responsável.
-        </div>
+      <div class="feature-body" style="padding:0">
         <div class="table-wrap">
-        <table class="comp-table">
-          <thead>
-            <tr><th>Funcionalidade</th><th>CRM Básico</th><th>CRM Completo</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Lista de leads</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-            <tr><td>Pipeline visual (Kanban)</td><td class="no">—</td><td class="yes">✓</td></tr>
-            <tr><td>Histórico de conversas</td><td class="no">—</td><td class="yes">✓</td></tr>
-            <tr><td>Integração WhatsApp API</td><td class="no">—</td><td class="yes">✓</td></tr>
-            <tr><td>Alertas de follow-up</td><td class="no">—</td><td class="yes">✓</td></tr>
-            <tr><td>Relatórios de conversão</td><td class="no">—</td><td class="yes">✓</td></tr>
-          </tbody>
-        </table>
-        </div>
-        <div class="info-row pitch" style="margin-top:12px">
-          <span class="info-row-icon">💬</span>
-          <div class="info-row-text"><strong>Argumento de venda:</strong> "Hoje vocês sabem quantos leads entraram no mês passado? Quantos viraram visita? Com o CRM completo, o gerente vê isso em tempo real sem perguntar pra ninguém."</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 6. Follow-up D+1, D+3 -->
-    <div class="feature-block">
-      <div class="feature-header">
-        <div class="feature-icon">🔁</div>
-        <div>
-          <div class="feature-name">Automação de Follow-up D+1, D+3</div>
-          <div class="feature-plans">
-            <span class="plan-tag tag-starter">Starter</span>
-          </div>
-        </div>
-      </div>
-      <div class="feature-body">
-        <div class="feature-what">
-          Sequência automática de mensagens para leads que entraram mas não responderam
-          ou não avançaram no funil:
-        </div>
-        <div class="info-row note" style="flex-direction:column;gap:6px;padding:14px">
-          <div style="font-size:12px;font-weight:700;color:var(--cyan);margin-bottom:4px">EXEMPLO DE SEQUÊNCIA</div>
-          <div style="font-size:12.5px;color:var(--mid);line-height:1.8">
-            <strong>D+0</strong> — Lead entra: vendedor responde (ou deveria)<br>
-            <strong>D+1</strong> — Automático: <em>"Oi João! Vi que você se interessou pelo Onix. Ainda está buscando? Tenho algumas opções que podem te interessar 😊"</em><br>
-            <strong>D+3</strong> — Automático: <em>"João, tenho uma condição especial essa semana no financiamento. Posso te passar os detalhes?"</em>
-          </div>
-        </div>
-        <div class="info-row warning">
-          <span class="info-row-icon">⚠️</span>
-          <div class="info-row-text"><strong>Importante saber:</strong> No Starter (sem API), estas mensagens podem precisar de disparo semi-manual. Com a API do Growth, são 100% automáticas.</div>
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th style="width:55%">Recurso</th>
+                <th style="text-align:center">Starter</th>
+                <th style="text-align:center">Growth</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Número WhatsApp configurado (Twilio)</td><td class="yes" style="text-align:center">✓</td><td class="yes" style="text-align:center">✓</td></tr>
+              <tr><td>Agente de IA com nome do cliente</td><td class="yes" style="text-align:center">✓</td><td class="yes" style="text-align:center">✓</td></tr>
+              <tr><td>CRM via link exclusivo</td><td class="yes" style="text-align:center">Básico</td><td class="yes" style="text-align:center">Completo</td></tr>
+              <tr><td>Follow-up automático D+1 e D+3</td><td class="yes" style="text-align:center">✓</td><td class="yes" style="text-align:center">✓</td></tr>
+              <tr><td>Relatório de resultados</td><td class="yes" style="text-align:center">Mensal</td><td class="yes" style="text-align:center">Semanal</td></tr>
+              <tr><td>Onboarding em 7 dias</td><td class="yes" style="text-align:center">✓</td><td class="yes" style="text-align:center">✓</td></tr>
+              <tr><td>Suporte de prompt por 30 dias</td><td class="yes" style="text-align:center">✓</td><td class="yes" style="text-align:center">✓</td></tr>
+              <tr><td>WhatsApp Business API oficial</td><td class="no" style="text-align:center">—</td><td class="yes" style="text-align:center">✓</td></tr>
+              <tr><td>Follow-up D+7</td><td class="no" style="text-align:center">—</td><td class="yes" style="text-align:center">✓</td></tr>
+              <tr><td>Integração multi-canal (Instagram, Facebook)</td><td class="no" style="text-align:center">—</td><td class="yes" style="text-align:center">✓</td></tr>
+              <tr><td>Pipeline Kanban no CRM</td><td class="no" style="text-align:center">—</td><td class="yes" style="text-align:center">✓</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
 
-    <!-- 7. Follow-up D+1, D+3, D+7 -->
-    <div class="feature-block">
-      <div class="feature-header">
-        <div class="feature-icon">🔂</div>
-        <div>
-          <div class="feature-name">Automação de Follow-up D+1, D+3, D+7</div>
-          <div class="feature-plans">
-            <span class="plan-tag tag-growth">Growth</span>
-          </div>
-        </div>
-      </div>
-      <div class="feature-body">
-        <div class="feature-what">
-          Igual ao Starter, porém com uma terceira mensagem no D+7 para leads frios,
-          100% automática via WhatsApp API.
-        </div>
-        <div class="info-row tip">
-          <span class="info-row-icon">💡</span>
-          <div class="info-row-text"><strong>Por que o D+7 importa:</strong> Pesquisas do setor automotivo mostram que ~23% dos leads que não fecham na primeira semana fecham entre o D+5 e D+15 — eles estavam pesquisando em outros lugares. O D+7 captura exatamente essa janela. Sem automação, ninguém lembra de mandar essa mensagem.</div>
-        </div>
-        <div class="info-row pitch">
-          <span class="info-row-icon">💬</span>
-          <div class="info-row-text"><strong>Argumento de venda:</strong> "Quantas vezes um vendedor lembra de mandar mensagem no 7º dia depois de um lead não responder? Zero. A automação faz isso por ele enquanto ele foca nos leads quentes."</div>
-        </div>
-      </div>
+    <div class="info-row warning" style="margin-top:12px">
+      <span class="info-row-icon">⚠️</span>
+      <div class="info-row-text"><strong>Não está incluso em nenhum plano:</strong> tráfego pago (Meta Ads, Google Ads), integração com site do cliente e gestão de anúncios — são responsabilidade do cliente.</div>
     </div>
+  </div>
 
-    <!-- 8. Automação avançada multi-canal -->
+  <!-- ONBOARDING -->
+  <div class="section">
+    <div class="section-title">Onboarding — 7 dias</div>
     <div class="feature-block">
-      <div class="feature-header">
-        <div class="feature-icon">🌐</div>
-        <div>
-          <div class="feature-name">Automação Avançada Multi-canal</div>
-          <div class="feature-plans">
-            <span class="plan-tag tag-pro">Pro</span>
-          </div>
-        </div>
-      </div>
       <div class="feature-body">
-        <div class="feature-what">
-          Follow-up não só pelo WhatsApp, mas coordenado em múltiplos canais
-          de forma simultânea. Também inclui lead scoring.
-        </div>
-        <div class="table-wrap">
-        <table class="comp-table">
-          <thead>
-            <tr><th>Canal / Funcionalidade</th><th>Growth</th><th>Pro</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Follow-up WhatsApp automático</td><td class="yes">✓ D+1,3,7</td><td class="yes">✓ D+1,3,7,14</td></tr>
-            <tr><td>Follow-up por e-mail</td><td class="no">—</td><td class="yes">✓</td></tr>
-            <tr><td>Remarketing Meta Ads para leads frios</td><td class="no">—</td><td class="yes">✓</td></tr>
-            <tr><td>Lead scoring (priorização automática)</td><td class="no">—</td><td class="yes">✓</td></tr>
-            <tr><td>Chatbot de qualificação</td><td class="no">—</td><td class="yes">✓</td></tr>
-          </tbody>
-        </table>
-        </div>
-        <div class="info-row tip" style="margin-top:12px">
-          <span class="info-row-icon">💡</span>
-          <div class="info-row-text"><strong>Lead scoring:</strong> O sistema pontua os leads por comportamento — abriu a mensagem, visitou a landing page novamente, clicou no link do veículo. Os leads mais pontuados sobem para o topo da fila do vendedor automaticamente.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 9. Relatórios -->
-    <div class="feature-block">
-      <div class="feature-header">
-        <div class="feature-icon">📊</div>
-        <div>
-          <div class="feature-name">Relatório de Leads (Mensal / Semanal / Diário)</div>
-          <div class="feature-plans">
-            <span class="plan-tag tag-starter">Starter — Mensal</span>
-            <span class="plan-tag tag-growth">Growth — Semanal</span>
-            <span class="plan-tag tag-pro">Pro — Diário</span>
-          </div>
-        </div>
-      </div>
-      <div class="feature-body">
-        <div class="feature-what">
-          Dashboard ou relatório enviado ao gestor com as métricas do período:
-          leads gerados, taxa de resposta, tempo médio de primeiro contato,
-          taxa de conversão (leads → visitas → vendas) e origem dos leads.
-        </div>
-        <div class="info-row note">
-          <span class="info-row-icon">📌</span>
-          <div class="info-row-text">
-            <strong>Mensal:</strong> Você descobre o problema depois de 30 dias — tarde demais para corrigir naquele mês.<br>
-            <strong>Semanal:</strong> Você corrige no meio do mês — ainda dá tempo de agir.<br>
-            <strong>Diário:</strong> Você age no mesmo dia — máxima performance e controle.
-          </div>
-        </div>
-        <div class="info-row pitch">
-          <span class="info-row-icon">💬</span>
-          <div class="info-row-text"><strong>Argumento de venda:</strong> "Se um vendedor parou de responder os leads na terça-feira, você quer descobrir isso na sexta ou no dia 30 do mês?"</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 10. Integração multi-canal -->
-    <div class="feature-block">
-      <div class="feature-header">
-        <div class="feature-icon">🔗</div>
-        <div>
-          <div class="feature-name">Integração Multi-canal</div>
-          <div class="feature-plans">
-            <span class="plan-tag tag-growth">Growth</span>
-            <span class="plan-tag tag-pro">Pro</span>
-          </div>
-        </div>
-      </div>
-      <div class="feature-body">
-        <div class="feature-what">
-          Todos os canais de entrada de lead conectados a um único lugar. Independente
-          de onde o cliente veio, ele entra no mesmo funil e recebe o mesmo follow-up automático.
-        </div>
-        <div class="info-row note" style="flex-direction:column">
-          <div style="font-size:12px;font-weight:700;color:var(--cyan);margin-bottom:8px">FLUXO SEM INTEGRAÇÃO</div>
-          <div style="font-size:12.5px;color:var(--muted)">Instagram DM → vendedor vê quando abrir o app → sem registro → lead some</div>
-          <div style="font-size:12px;font-weight:700;color:#34d399;margin:10px 0 8px">FLUXO COM INTEGRAÇÃO</div>
-          <div style="font-size:12.5px;color:var(--mid)">Instagram DM + Facebook Lead + Google Forms + Landing page → <strong style="color:var(--cyan)">CRM (tudo num lugar)</strong> → follow-up automático começa imediatamente</div>
-        </div>
-        <div class="info-row pitch" style="margin-top:10px">
-          <span class="info-row-icon">💬</span>
-          <div class="info-row-text"><strong>Argumento de venda:</strong> "Hoje seus vendedores precisam checar Instagram, Facebook e WhatsApp separado. Lead some entre as abas. Com a integração, tudo aparece num lugar só e nenhum lead passa despercebido."</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 11. Gestor de tráfego -->
-    <div class="feature-block">
-      <div class="feature-header">
-        <div class="feature-icon">🎯</div>
-        <div>
-          <div class="feature-name">Gestor de Tráfego Dedicado</div>
-          <div class="feature-plans">
-            <span class="plan-tag tag-pro">Pro exclusivo</span>
-          </div>
-        </div>
-      </div>
-      <div class="feature-body">
-        <div class="feature-what">
-          Um profissional da RonalDigital responsável por criar, monitorar e otimizar
-          os anúncios pagos da loja — Meta Ads (Instagram/Facebook) e Google Ads.
-          O cliente não precisa entender de anúncios: você faz tudo.
-        </div>
-        <div class="info-row note">
-          <span class="info-row-icon">📌</span>
-          <div class="info-row-text">
-            <strong>O que o gestor faz:</strong><br>
-            · Cria as campanhas e os criativos (artes, textos, vídeos)<br>
-            · Ajusta os anúncios semanalmente com base nos resultados<br>
-            · Testa variações de público e de oferta (A/B)<br>
-            · Garante que o custo por lead não suba sem controle<br>
-            · Instala e monitora pixels de rastreamento
-          </div>
-        </div>
-        <div class="info-row warning">
-          <span class="info-row-icon">⚠️</span>
-          <div class="info-row-text"><strong>Importante:</strong> O budget de anúncios (verba para o Facebook/Google) é pago à parte pelo cliente — não está incluso na mensalidade. O gestor gerencia esse orçamento, mas não o paga. Deixe isso claro no contrato.</div>
-        </div>
-        <div class="info-row pitch">
-          <span class="info-row-icon">💬</span>
-          <div class="info-row-text"><strong>Argumento de venda:</strong> "No Pro você não precisa se preocupar com anúncio. A gente cuida do tráfego, do CRM e da automação. Você só atende os leads que chegam."</div>
+        <div style="font-size:13px;color:var(--mid);line-height:2.2">
+          <strong style="color:var(--text)">Dia 1</strong> &nbsp;&nbsp;— Reunião: nome do agente, estoque e horários da loja<br>
+          <strong style="color:var(--text)">Dia 2–3</strong> — Configuração do número Twilio, agente e CRM<br>
+          <strong style="color:var(--text)">Dia 5</strong> &nbsp;&nbsp;— Testes com simulação de conversas reais<br>
+          <strong style="color:var(--text)">Dia 7</strong> &nbsp;&nbsp;— <span style="color:#34d399;font-weight:700">Go live</span> — cliente aponta o tráfego para o número novo<br>
+          <strong style="color:var(--text)">Sem. 2–4</strong> — Ajustes de prompt inclusos, sem custo extra
         </div>
       </div>
     </div>
   </div>
 
-  <!-- OBJECTIONS -->
+  <!-- PERGUNTAS FREQUENTES -->
   <div class="section">
-    <div class="section-title">Objeções comuns e como responder</div>
+    <div class="section-title">Perguntas frequentes na venda</div>
 
     <div class="objection-block">
-      <div class="obj-q">Está caro. Outro me faz por menos.</div>
+      <div class="obj-q">Preciso de um número novo?</div>
+      <div class="obj-a">Sim. Um chip separado para o agente — em torno de R$20. <strong>O número pessoal do dono fica completamente intocado.</strong></div>
+    </div>
+
+    <div class="objection-block">
+      <div class="obj-q">Você mexe no meu site?</div>
+      <div class="obj-a">Não. O agente entra pelo WhatsApp. Se já tem tráfego rodando, só troca o número de destino. <strong>Nada mais muda.</strong></div>
+    </div>
+
+    <div class="objection-block">
+      <div class="obj-q">Posso usar o número que já uso com clientes?</div>
+      <div class="obj-a">Não recomendamos. Quando o número entra na API, ele para de funcionar no app do celular. <strong>Um chip novo evita qualquer problema com o histórico existente.</strong></div>
+    </div>
+
+    <div class="objection-block">
+      <div class="obj-q">Como a equipe acessa o CRM?</div>
+      <div class="obj-a">Via link exclusivo da loja, no celular ou computador. <strong>Sem instalar nada.</strong> Cada vendedor recebe acesso próprio.</div>
+    </div>
+  </div>
+
+  <!-- OBJEÇÕES -->
+  <div class="section">
+    <div class="section-title">Objeções e como responder</div>
+
+    <div class="objection-block">
+      <div class="obj-q">Está caro. Outro faz por menos.</div>
       <div class="obj-a">
-        "Pode ser. Mas me diz: esse outro entrega CRM integrado com WhatsApp API, follow-up automático, landing page e relatório semanal? Ou está vendendo só o perfil do Instagram bem feito?
-        A diferença não é o preço — é o que você para de perder. Se você perde 3 clientes por mês por demora no atendimento, e cada cliente vale R$60 mil... são R$180 mil indo embora por mês.
-        <strong>Nosso plano custa R$1.297. O prejuízo custa R$180.000.</strong>"
+        "Esse outro entrega agente de IA 24h, CRM integrado, follow-up automático e relatório semanal — ou só configura o Instagram?
+        Se você perde 3 clientes por mês por demora no atendimento, e cada cliente vale R$60 mil, são R$180 mil indo embora por mês.
+        <strong>Nosso plano custa R$997. O prejuízo custa R$180.000.</strong>"
       </div>
     </div>
 
     <div class="objection-block">
-      <div class="obj-q">Preciso pensar / vou falar com meu sócio.</div>
+      <div class="obj-q">Preciso pensar / vou falar com a equipe.</div>
       <div class="obj-a">
-        "Claro, faz sentido. Me deixa te perguntar uma coisa antes: o que exatamente você precisa pensar? Se for sobre o investimento, posso te mostrar a conta de quanto vocês estão perdendo hoje sem o sistema. Se for sobre se funciona, posso te mostrar um cliente no mesmo segmento que já usa.
+        "Claro. O que exatamente você precisa pensar? Se for o investimento, posso mostrar a conta do que estão perdendo hoje. Se for se funciona, posso mostrar um cliente no mesmo segmento.
         <strong>O que seria mais útil pra você decidir?</strong>"
       </div>
     </div>
 
     <div class="objection-block">
-      <div class="obj-q">A gente já tem WhatsApp Business. Não precisa disso.</div>
+      <div class="obj-q">Já temos WhatsApp Business. Não precisa disso.</div>
       <div class="obj-a">
-        "Ótimo, isso facilita a configuração. Mas o WhatsApp Business gratuito é manual — alguém precisa estar olhando o celular para responder. O que a gente entrega é a <strong>API oficial</strong>, que permite: resposta automática imediata 24h, follow-up programado para quem não respondeu, e vários vendedores atendendo no mesmo número ao mesmo tempo.
-        É a diferença entre ter um carro e ter um carro com piloto automático."
+        "O WhatsApp Business gratuito é manual — alguém precisa estar olhando o celular. O que a gente entrega é um <strong>agente de IA que responde sozinho 24h</strong>, manda follow-up automático e registra tudo no CRM. É a diferença entre ter um vendedor e ter um vendedor que nunca dorme."
       </div>
     </div>
 
     <div class="objection-block">
-      <div class="obj-q">Já tentei automação antes e não funcionou.</div>
+      <div class="obj-q">Quero testar um mês antes de assinar.</div>
       <div class="obj-a">
-        "Entendo. O que costuma dar errado é configurar a ferramenta sem ajustar o processo comercial — a automação responde, mas os vendedores não sabem o que fazer quando o lead chega qualificado. A gente não entrega só a tecnologia: entrega o treinamento da equipe, o script de abordagem e o acompanhamento semanal nos primeiros 30 dias. <strong>A ferramenta funciona quando o processo funciona junto.</strong>"
-      </div>
-    </div>
-
-    <div class="objection-block">
-      <div class="obj-q">Quero testar um mês antes de assinar contrato.</div>
-      <div class="obj-a">
-        "Eu entendo a lógica, mas não é possível operacionalmente: o setup leva de 1 a 2 semanas, a integração da API tem aprovação da Meta que demora dias, e os resultados de follow-up aparecem a partir do D+7 em diante.
-        Em 30 dias você mal terminou de configurar. O contrato mínimo de 3 meses existe justamente para garantir que você veja resultado real — não só a implementação.
-        <strong>A proposta cobre 3 meses com tudo incluso. É o tempo necessário para o sistema gerar resultado mensurável.</strong>"
+        "O setup leva de 1 a 2 semanas e os resultados de follow-up aparecem a partir do D+7. Em 30 dias você mal terminou de configurar.
+        <strong>O contrato de 3 meses existe para você ver resultado de verdade — não só a implementação.</strong>"
       </div>
     </div>
   </div>
@@ -936,7 +620,7 @@
 
 <footer>
   RonalDigital &copy; 2026 &nbsp;·&nbsp; Guia Interno de Vendas &nbsp;·&nbsp;
-  <strong style="color:#f87171">Documento confidencial — uso restrito aos sócios</strong>
+  <strong style="color:#f87171">Documento confidencial — uso interno RonalDigital</strong>
 </footer>
 
 </body>
